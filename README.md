@@ -9,3 +9,5 @@ use Google Earth Pro - on Desktop PC/MAC to test:
 
 Google Earth -> file -> open -> choose .kml file
 
+use QGIS or ogr2ogr for command line / python testing ( if you want ;-) );
+

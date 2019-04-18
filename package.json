@@ -1,0 +1,20 @@
+{
+  "name": "xml",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scripts/counties.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "counties": "node scripts/counties.js",
+    "zip": "node scripts/zip.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "fse": "^4.0.1",
+    "path": "^0.12.7",
+    "read-xml": "^3.0.0",
+    "xml-js": "^1.6.11"
+  }
+}

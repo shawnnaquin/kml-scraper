@@ -5,7 +5,7 @@ const convert = require('xml-js');
 const statefips = require('../src/statefips.json');
 
 const FILE = path.resolve( __dirname, '../src/cb_2017_us_county_20m.kml');
-const DIST = path.resolve( __dirname, '../dist/' );
+const DIST = path.resolve( __dirname, '../dist/counties/' );
 
 fse.removeSync( DIST );
 
@@ -56,7 +56,7 @@ xmlReader.readXML( fse.readFileSync( FILE ), (err, data) => {
 
         newXML = convert.json2xml( newResult, {compact: true, ignoreComment: true, spaces: 0 } );
 
-        const FOLDER = path.join( DIST, `counties/` );
+        const FOLDER = path.join( DIST );
 
         fse.ensureDir( FOLDER )
             .then(() => {

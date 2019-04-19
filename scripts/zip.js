@@ -39,11 +39,11 @@ xmlReader.readXML( fse.readFileSync( FILE ), (err, data) => {
         $item.name._text = `${normalizedName}`;
 
         newResult.kml.Document.Folder = {
-            name: `${ normalizedStateName}/${normalizedName}`,
+            name: `${normalizedName}`,
             Placemark: [ $item ]
         };
         let newXML = xml;
-        newXML = convert.json2xml( newResult, {compact: true, ignoreComment: true, spaces: 0 } );
+        newXML = convert.json2xml( newResult, {compact: true, ignoreComment: true, spaces: 4 } );
 
         const FOLDER = path.join( DIST );
 

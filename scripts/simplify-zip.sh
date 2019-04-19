@@ -1,5 +1,4 @@
-rm -rf ../dist/simplified
-mkdir ../dist/simplified
+rm -rf ../dist/simplified/zip
 mkdir ../dist/simplified/zip
 
 for f in ../dist/zip/*.kml ; do FILENAME=`basename ${f%%}`;

@@ -2,11 +2,13 @@
   "name": "xml",
   "version": "1.0.0",
   "description": "",
-  "main": "scripts/counties.js",
+  "main": "scripts/county.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "counties": "node scripts/counties.js",
-    "zip": "node scripts/zip.js"
+    "county": "node scripts/county.js",
+    "zip": "node scripts/zip.js",
+    "simplify:zip": "bash scripts/simplify-zip.sh",
+    "simplify:county": "bash scripts/simplify-county.sh"
   },
   "author": "",
   "license": "ISC",

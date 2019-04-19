@@ -7,6 +7,8 @@ const statefips = require('../src/statefips.json');
 const FILE = path.resolve( __dirname, '../src/cb_2017_us_county_20m.kml');
 const DIST = path.resolve( __dirname, '../dist/county/' );
 
+let dupes = [];
+
 fse.removeSync( DIST );
 
 xmlReader.readXML( fse.readFileSync( FILE ), (err, data) => {
@@ -33,7 +35,7 @@ xmlReader.readXML( fse.readFileSync( FILE ), (err, data) => {
         for ( let $extra of $item.ExtendedData.SchemaData.SimpleData ) {
 
             if ( $extra._attributes.name === 'STATEFP' ) {
-                normalizedStateName = statefips[$extra._text].replace(' ', '_').toLocaleLowerCase();
+                normalizedStateName = statefips[$extra._text].split(' ').join('_').toLocaleLowerCase();
             }
 
         }
@@ -44,41 +46,46 @@ xmlReader.readXML( fse.readFileSync( FILE ), (err, data) => {
 
         newResult.kml.Document.name = 'Counties';
 
-        $item._attributes.id = `${ normalizedStateName}_${normalizedName}`;
-        $item.name._text = `${ normalizedStateName}_${normalizedName}`;
+        $item._attributes.id = `${normalizedStateName}_${normalizedName}`;
+        $item.name._text = `${normalizedStateName}_${normalizedName}`;
 
         newResult.kml.Document.Folder = {
-            name: `${ normalizedStateName}_${normalizedName}`,
+            name: `${normalizedStateName}_${normalizedName}`,
             Placemark: [ $item ]
         };
 
         let newXML = xml;
 
-        newXML = convert.json2xml( newResult, {compact: true, ignoreComment: true, spaces: 4 } );
+        newXML = convert.json2xml( newResult, {compact: true, ignoreComment: true, spaces: 0 } );
 
-        const FOLDER = path.join( DIST );
+        if ( !dupes.includes(`${normalizedStateName}_${normalizedName}` ) ) {
 
-        fse.ensureDir( FOLDER )
-            .then(() => {
-                const FILE = path.join( FOLDER, `/${normalizedName}.kml`);
-                fse.ensureFile( FILE )
-                    .then(() => {
-                        fse.writeFile( FILE, newXML, function(err, data) {
-                            if (err) {
-                                console.log(err);
-                            }
-                            else {
-                                // console.log('updated!');
-                            }
-                        });
-                    })
-                    .catch(err => {
-                        console.error(err)
-                    })
-            })
-            .catch(err => {
-                console.error(err)
-            });
+            fse.ensureDir( DIST )
+                .then(() => {
+                    const FILE = path.join( DIST, `/${normalizedStateName}_${normalizedName}.kml`);
+                    fse.ensureFile( FILE )
+                        .then(() => {
+                            fse.writeFile( FILE, newXML, function(err, data) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                else {
+                                    // console.log('updated!');
+                                }
+                            });
+                        })
+                        .catch(err => {
+                            console.error(err)
+                        })
+                })
+                .catch(err => {
+                    console.error(err)
+                });
+            dupes.push( `${normalizedStateName}_${normalizedName}` );
+        } else {
+            console.log('dupe!', `${normalizedStateName}_${normalizedName}` );
+        }
+
 
     });
 

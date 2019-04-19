@@ -22,8 +22,6 @@ xmlReader.readXML( fse.readFileSync( FILE ), (err, data) => {
     Object.keys( places ).forEach( ( place, placeIndex ) => {
         let $item = places[place];
         // let $item = places[0];
-        // console.log( $item );
-        let normalizedStateName;
         let rawName = $item.name._text.split(' ').join('_');
         let parsedName = rawName.split('<at><openparen>')[1].split('<closeparen>')[0];
         let lowerCaseName = parsedName.toLocaleLowerCase();
@@ -43,13 +41,11 @@ xmlReader.readXML( fse.readFileSync( FILE ), (err, data) => {
             Placemark: [ $item ]
         };
         let newXML = xml;
-        newXML = convert.json2xml( newResult, {compact: true, ignoreComment: true, spaces: 4 } );
+        newXML = convert.json2xml( newResult, {compact: true, ignoreComment: true, spaces: 0 } );
 
-        const FOLDER = path.join( DIST );
-
-        fse.ensureDir( FOLDER )
+        fse.ensureDir( DIST )
             .then(() => {
-                const FILE = path.join( FOLDER, `/${normalizedName}.kml`);
+                const FILE = path.join( DIST, `/${normalizedName}.kml`);
                 fse.ensureFile( FILE )
                     .then(() => {
                         fse.writeFile( FILE, newXML, function(err, data) {

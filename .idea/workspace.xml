@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="deeb7cab-f1a7-4d99-94fb-1be8c525dd35" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/scripts/simplify-county.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simplify-county.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/simplify-zip.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simplify-zip.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,24 +12,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="15" lean-forward="true" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>conver</find>
-      <find>&lt;/folder</find>
-      <find>&lt;folder</find>
-      <find>fs</find>
       <find>&lt;name</find>
       <find>state</find>
       <find>xmlRe</find>
@@ -51,6 +37,15 @@
       <find>70070</find>
       <find>layer</find>
       <find>begin</find>
+      <find>allen</find>
+      <find>baltimore</find>
+      <find>replace</find>
+      <find>&lt;/kml</find>
+      <find>STATEFP</find>
+      <find>st. louis</find>
+      <find>dupes</find>
+      <find>normalizedState</find>
+      <find>Folder</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -71,14 +66,16 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/dist/zip/00617.kml" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.sh" />
-        <option value="$PROJECT_DIR$/scripts/zip.js" />
         <option value="$PROJECT_DIR$/dist/simplified/00719.kml" />
         <option value="$PROJECT_DIR$/scripts/simplify.sh" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.sh" />
         <option value="$PROJECT_DIR$/scripts/counties.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/scripts/simplify-zip.sh" />
         <option value="$PROJECT_DIR$/scripts/simplify-county.sh" />
+        <option value="$PROJECT_DIR$/src/cb_2017_us_county_20m.kml" />
+        <option value="$PROJECT_DIR$/scripts/county.js" />
+        <option value="$PROJECT_DIR$/scripts/simplify-zip.sh" />
+        <option value="$PROJECT_DIR$/scripts/zip.js" />
       </list>
     </option>
   </component>
@@ -172,12 +169,13 @@
       <option name="presentableId" value="Default" />
       <updated>1555616111682</updated>
       <workItem from="1555616112834" duration="8994000" />
-      <workItem from="1555689362887" duration="3504000" />
+      <workItem from="1555689362887" duration="7701000" />
+      <workItem from="1555701865427" duration="248000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12663000" />
+    <option name="totallyTimeSpent" value="17108000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
@@ -213,13 +211,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.json" />
-    <entry file="file://$PROJECT_DIR$/src/statefips.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="52" column="5" selection-start-line="52" selection-start-column="3" selection-end-line="52" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/alabama/autauga.xml" />
     <entry file="file://$PROJECT_DIR$/alabama/autauga.kml" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.json" />
@@ -234,13 +225,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/counties/alabama/baldwin.kml" />
-    <entry file="file://$PROJECT_DIR$/src/cb_2017_us_county_20m.kml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="51069" column="17" lean-forward="true" selection-start-line="51069" selection-start-column="17" selection-end-line="51069" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/counties/alabama/autauga.kml" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -260,9 +244,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/counties/aguada.kml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/county/aguada.kml" />
     <entry file="file://$PROJECT_DIR$/src/cb_2017_us_zcta510_500k.kml">
       <provider selected="true" editor-type-id="LargeFileEditor">
         <state relative-caret-position="386">
@@ -284,13 +266,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/zip/00601.kml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -298,16 +273,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/counties/abbeville.kml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/simplified/00719.kml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/00719.kml" />
     <entry file="file://$PROJECT_DIR$/dist/zip/00602.kml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -322,38 +288,76 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/zip.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        <state>
+          <caret column="1" lean-forward="true" selection-start-column="1" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/zip/00601.kml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-181">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/county/abbeville.kml" />
+    <entry file="file://$PROJECT_DIR$/dist/county/allamakee.kml" />
+    <entry file="file://$PROJECT_DIR$/dist/county/allen.kml" />
+    <entry file="file://$PROJECT_DIR$/dist/county/missouri_st._louis.kml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="811">
+          <caret line="118" column="5" selection-start-line="118" selection-end-line="118" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/statefips.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cb_2017_us_county_20m.kml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="90412" column="13" lean-forward="true" selection-start-line="90412" selection-start-column="13" selection-end-line="90412" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/county/virginia_roanoke.kml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="109" column="37" lean-forward="true" selection-start-line="109" selection-start-column="37" selection-end-line="109" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/county.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/simplify-zip.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="28" lean-forward="true" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+        <state relative-caret-position="561">
+          <caret line="60" column="58" lean-forward="true" selection-start-line="60" selection-start-column="58" selection-end-line="60" selection-end-column="58" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/simplify-county.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="5" lean-forward="true" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <caret line="5" column="14" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/scripts/simplify-zip.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="15" lean-forward="true" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
+        <state relative-caret-position="120">
+          <caret line="8" column="5" lean-forward="true" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/zip.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
         </state>
       </provider>
     </entry>

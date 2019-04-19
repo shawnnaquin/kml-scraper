@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "county": "node scripts/county.js",
     "zip": "node scripts/zip.js",
-    "simplify:zip": "bash scripts/simplify-zip.sh",
-    "simplify:county": "bash scripts/simplify-county.sh"
+    "simplify:zip": "bash ./scripts/simplify-zip.sh",
+    "simplify:county": "bash ./scripts/simplify-county.sh"
   },
   "author": "",
   "license": "ISC",

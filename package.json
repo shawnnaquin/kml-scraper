@@ -5,10 +5,10 @@
   "main": "scripts/county.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "county": "node scripts/county.js",
-    "zip": "node scripts/zip.js",
-    "simplify:zip": "bash ./scripts/simplify-zip.sh",
-    "simplify:county": "bash ./scripts/simplify-county.sh"
+    "county": "node scripts/process.js --county",
+    "zip": "node scripts/process.js --zip",
+    "simplify:zip": "bash ./scripts/simplify.sh zip",
+    "simplify:county": "bash ./scripts/simplify.sh county"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +18,9 @@
     "path": "^0.12.7",
     "read-xml": "^3.0.0",
     "xml-js": "^1.6.11"
+  },
+  "devDependencies": {
+    "install": "^0.12.2",
+    "npm": "^6.9.0"
   }
 }

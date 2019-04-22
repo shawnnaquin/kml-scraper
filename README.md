@@ -11,3 +11,5 @@ Google Earth -> file -> open -> choose .kml file
 
 use QGIS or ogr2ogr for command line / python testing ( if you want ;-) );
 
+to run the sh scripts you'll need to install gdal on mac with homebrew;
+you need the ogr2ogr from gdal;

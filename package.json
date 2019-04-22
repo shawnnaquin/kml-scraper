@@ -10,6 +10,9 @@
     "simplify:zip": "bash ./scripts/simplify.sh zip",
     "simplify:county": "bash ./scripts/simplify.sh county"
   },
+  "config": {
+    "precision": 0.001
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -1,25 +1,18 @@
 #!/usr/bin/env bash
 
-rm -rf dist/simplified/$1
-mkdir dist/simplified/$1
+TYPE=$1;
+SIMPLE=dist/simplified/$TYPE;
+COMPLEX=dist/complex/$TYPE;
 
-for f in dist/complex/$1/*.kml ; do FILENAME=`basename ${f%%}`;
+rm -rf $SIMPLE && mkdir $SIMPLE
 
-    FILE=dist/simplified/$1/${FILENAME};
-    echo ${FILENAME};
+for f in ${COMPLEX}/*.kml ; do FILENAME=`basename ${f} .kml`;
 
-    ogr2ogr -f libkml -simplify 0.01 $FILE dist/complex/$1/${FILENAME};
+    FILE=${SIMPLE}/${FILENAME};
+    echo $FILENAME;
 
-	if grep -q MultiGeometry $FILE; then
-		poly=`sed -n '/<MultiGeometry/,/<\/MultiGeometry/p' $FILE | tr -d '[:space:]'`;
-	else
-		poly=`sed -n '/<Polygon/,/<\/Polygon/p' $FILE | tr -d '[:space:]'`;
-	fi
-
-	# poly=${poly//<tessellate>[^;]<\/tessellate>/};
-	# poly=${poly//<altitudeMode>clampToGround<\/altitudeMode>/};
-	# poly=${poly//<extrude>[^;]<\/extrude>/};
-
-	echo $poly > $FILE;
+    ogr2ogr -f libkml -simplify 0.01 ${SIMPLE}/${FILENAME}.kml ${COMPLEX}/${FILENAME}.kml;
+    ogr2ogr -f GeoJSON ${SIMPLE}/${FILENAME}.json ${SIMPLE}/${FILENAME}.kml
+    rm ${SIMPLE}/${FILENAME}.kml;
 
 done;

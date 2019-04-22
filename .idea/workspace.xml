@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="deeb7cab-f1a7-4d99-94fb-1be8c525dd35" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/simplify-county.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simplify-county.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/simplify-zip.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simplify-zip.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/simplify.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simplify.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,17 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scripts/county.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -78,7 +67,6 @@
         <option value="$PROJECT_DIR$/dist/zip/00617.kml" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.sh" />
         <option value="$PROJECT_DIR$/dist/simplified/00719.kml" />
-        <option value="$PROJECT_DIR$/scripts/simplify.sh" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.sh" />
         <option value="$PROJECT_DIR$/scripts/counties.js" />
         <option value="$PROJECT_DIR$/package.json" />
@@ -87,6 +75,8 @@
         <option value="$PROJECT_DIR$/scripts/zip.js" />
         <option value="$PROJECT_DIR$/scripts/simplify-zip.sh" />
         <option value="$PROJECT_DIR$/scripts/simplify-county.sh" />
+        <option value="$PROJECT_DIR$/dist/geoSimple/county/geojson.json" />
+        <option value="$PROJECT_DIR$/scripts/simplify.sh" />
       </list>
     </option>
   </component>
@@ -100,7 +90,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -116,12 +105,20 @@
             <path>
               <item name="xml" type="b2602c69:ProjectViewProjectNode" />
               <item name="xml" type="462c0819:PsiDirectoryNode" />
-              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="simplified" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="xml" type="b2602c69:ProjectViewProjectNode" />
               <item name="xml" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="simplified" type="462c0819:PsiDirectoryNode" />
+              <item name="zip" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xml" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xml" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="xml" type="b2602c69:ProjectViewProjectNode" />
@@ -136,25 +133,27 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Bash&#10;JSON&#10;JavaScript" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tfg/frontend/public/geo/json" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/scripts" />
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/scripts/" />
       <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../tfg/frontend/public/geo/json" />
+      <recent name="$PROJECT_DIR$/scripts" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -182,18 +181,19 @@
       <workItem from="1555616112834" duration="8994000" />
       <workItem from="1555689362887" duration="7701000" />
       <workItem from="1555701865427" duration="516000" />
-      <workItem from="1555703841475" duration="401000" />
+      <workItem from="1555703841475" duration="497000" />
+      <workItem from="1555940864794" duration="1110000" />
+      <workItem from="1555943031392" duration="1988000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17777000" />
+    <option name="totallyTimeSpent" value="20971000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -264,20 +264,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/zip/00617.kml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="44" selection-start-column="44" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/zip/00606.kml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/zip/00617.kml" />
+    <entry file="file://$PROJECT_DIR$/dist/zip/00606.kml" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -286,13 +274,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/simplified/00719.kml" />
-    <entry file="file://$PROJECT_DIR$/dist/zip/00602.kml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/zip/00602.kml" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -307,23 +289,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/zip/00601.kml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-181">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/zip/00601.kml" />
     <entry file="file://$PROJECT_DIR$/dist/county/abbeville.kml" />
     <entry file="file://$PROJECT_DIR$/dist/county/allamakee.kml" />
     <entry file="file://$PROJECT_DIR$/dist/county/allen.kml" />
-    <entry file="file://$PROJECT_DIR$/dist/county/missouri_st._louis.kml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="811">
-          <caret line="118" column="5" selection-start-line="118" selection-end-line="118" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/county/missouri_st._louis.kml" />
     <entry file="file://$PROJECT_DIR$/src/statefips.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -338,40 +308,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/county/virginia_roanoke.kml">
+    <entry file="file://$PROJECT_DIR$/dist/county/virginia_roanoke.kml" />
+    <entry file="file://$PROJECT_DIR$/scripts/simplify-county.sh" />
+    <entry file="file://$PROJECT_DIR$/scripts/simplify-zip.sh" />
+    <entry file="file://$PROJECT_DIR$/scripts/zip.js" />
+    <entry file="file://$PROJECT_DIR$/scripts/county.js" />
+    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_baldwin.kml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_bibb.kml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_autauga.kml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_barbour.kml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="109" column="37" lean-forward="true" selection-start-line="109" selection-start-column="37" selection-end-line="109" selection-end-column="37" />
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/simplify-county.sh">
+    <entry file="file://$PROJECT_DIR$/../tfg/frontend/public/geo/json/geojson.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="8" column="5" lean-forward="true" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/simplify-zip.sh">
+    <entry file="file://$PROJECT_DIR$/dist/geoSimple/county/geojson.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+        <state relative-caret-position="90">
+          <caret line="6" column="3" lean-forward="true" selection-end-line="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/zip.js">
+    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_conecuh.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+        <state relative-caret-position="120">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/county.js">
+    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_bibb.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_barbour.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_baldwin.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/simplify.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+        <state relative-caret-position="225">
+          <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/process.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/zip/00637.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/zip/00627.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/zip/00623.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/zip/00612.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/zip/00610.json">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

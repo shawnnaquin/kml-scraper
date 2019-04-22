@@ -26,6 +26,13 @@ GDAL2: ogr2ogr
 https://varunpant.com/posts/gdal-2-on-mac-with-homebrew
 
 ```
+brew tap osgeo/osgeo4mac
+brew install gdal2
+```
+
+if that doesn't work try:
+
+```
 brew unlink gdal
 brew tap osgeo/osgeo4mac && brew tap --repair
 brew install jasper netcdf # gdal dependencies
@@ -33,6 +40,10 @@ brew install gdal2 --with-armadillo \
 --with-complete --with-libkml --with-unsupported
 brew link --force gdal2
 ```
+that still might fail! google is your friend!
+
+those packages have large dependencies: Java, Python, Perl, XCode, etc...
+may take >1hr to install!
 
 use Google Earth Pro - on Desktop PC/MAC to test:
 

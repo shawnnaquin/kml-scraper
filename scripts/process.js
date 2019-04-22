@@ -4,8 +4,6 @@ const xmlReader = require('read-xml');
 const convert = require('xml-js');
 const statefips = require('../src/statefips.json');
 
-reset();
-
 let type = process.argv.includes('--county') ?
     'county' : 'zip';
 
@@ -22,6 +20,8 @@ fse.removeSync( DIST );
 
 // TODO
 // WORKING ON PROGRESS BARS
+
+// reset();
 
 // let downloaded;
 // let percent;
@@ -61,17 +61,6 @@ fse.removeSync( DIST );
 // decodedXMLStream.on( 'end', ( ) => {
 //     done();
 // });
-xmlReader.readXML( fse.readFileSync( FILE ), function( err, data ) {
-
-    process.stdout.write( `reading...` );
-
-    if ( err ) {
-        console.error(err);
-    }
-
-    done( data );
-
-});
 
 let done = ( data ) => {
 
@@ -169,3 +158,15 @@ let done = ( data ) => {
     });
 
 }
+
+xmlReader.readXML( fse.readFileSync( FILE ), function( err, data ) {
+
+    process.stdout.write( `reading...\r` );
+
+    if ( err ) {
+        console.error(err);
+    }
+
+    done( data );
+
+});

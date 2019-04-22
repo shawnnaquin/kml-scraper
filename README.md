@@ -4,8 +4,9 @@ npm run simplify:county
 
 npm run zip
 npm run simplify:zip
-
 ```
+
+____
 
 `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`
 
@@ -14,12 +15,18 @@ to smaller individual KML files of individual locations;
 
 finally, process each KML to geoJSON;
 
+____
+
 download a kml file from:
 https://www.census.gov/geographies/mapping-files/time-series/geo/kml-cartographic-boundary-files.html
 
 currently using:
+
 `src/cb_2017_us_county_20m.kml`
-`cb_2017_us_zcta510_500k.kml`
+
+`src/cb_2017_us_zcta510_500k.kml`
+
+____
 
 required CLI tools (mac/linux):
 GDAL2: ogr2ogr
@@ -44,6 +51,8 @@ that still might fail! google is your friend!
 
 those packages have large dependencies: Java, Python, Perl, XCode, etc...
 may take >1hr to install!
+
+____
 
 use Google Earth Pro - on Desktop PC/MAC to test:
 

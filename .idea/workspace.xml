@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="deeb7cab-f1a7-4d99-94fb-1be8c525dd35" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/process.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/process.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,19 +14,29 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/process.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="489">
+              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>PlaceMark</find>
-      <find>70070</find>
-      <find>layer</find>
-      <find>begin</find>
-      <find>allen</find>
-      <find>baltimore</find>
-      <find>replace</find>
-      <find>&lt;/kml</find>
-      <find>STATEFP</find>
       <find>st. louis</find>
       <find>dupes</find>
       <find>normalizedState</find>
@@ -40,11 +53,20 @@
       <find>DIST</find>
       <find>longitud</find>
       <find>removeDir</find>
-      <find>kml</find>
       <find>TEMP</find>
       <find>total</find>
       <find>0500000US01003</find>
       <find>8600000US00610</find>
+      <find>kml</find>
+      <find>data</find>
+      <find>downloaded</find>
+      <find>FILE</find>
+      <find>.size</find>
+      <find>percent</find>
+      <find>contentSize</find>
+      <find>converting</find>
+      <find>start</find>
+      <find>done</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -72,7 +94,6 @@
         <option value="$PROJECT_DIR$/scripts/simplify-zip.sh" />
         <option value="$PROJECT_DIR$/scripts/simplify-county.sh" />
         <option value="$PROJECT_DIR$/dist/geoSimple/county/geojson.json" />
-        <option value="$PROJECT_DIR$/scripts/process.js" />
         <option value="$PROJECT_DIR$/src/out.json" />
         <option value="$PROJECT_DIR$/scripts/topo2geojson.py" />
         <option value="$PROJECT_DIR$/README.md" />
@@ -81,13 +102,14 @@
         <option value="$PROJECT_DIR$/utilities/topo2geojson.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_3.sh" />
         <option value="$PROJECT_DIR$/scripts/simplifydma.sh" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/dmainfo.json" />
         <option value="$PROJECT_DIR$/scripts/processdma.js" />
         <option value="$PROJECT_DIR$/scripts/simplify.sh" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_4.sh" />
         <option value="$PROJECT_DIR$/dist/simplified/county/alabama_autauga.json" />
         <option value="$PROJECT_DIR$/src/README.md" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/scripts/process.js" />
       </list>
     </option>
   </component>
@@ -107,6 +129,22 @@
             <path>
               <item name="xml" type="b2602c69:ProjectViewProjectNode" />
               <item name="xml" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xml" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xml" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xml" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xml" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="complex" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xml" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xml" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="xml" type="b2602c69:ProjectViewProjectNode" />
@@ -176,17 +214,18 @@
       <workItem from="1556114656818" duration="6613000" />
       <workItem from="1556121508430" duration="331000" />
       <workItem from="1556121850199" duration="97000" />
-      <workItem from="1556121958275" duration="2734000" />
+      <workItem from="1556121958275" duration="10245000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41031000" />
+    <option name="totallyTimeSpent" value="48542000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2546875" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12708333" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -214,13 +253,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_2.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="65" selection-start-line="4" selection-start-column="65" selection-end-line="4" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utilities/topo2geojson.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -262,24 +294,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/simplifydma.sh" />
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="57" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/topodma.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="54" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/process.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
         </state>
       </provider>
     </entry>
@@ -399,6 +417,27 @@
             <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="17509" column="12" selection-start-line="17509" selection-start-column="12" selection-end-line="17509" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/process.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
         </state>
       </provider>
     </entry>

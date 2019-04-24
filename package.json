@@ -9,6 +9,7 @@
 
     "county": "node scripts/process.js --county",
     "zip": "node scripts/process.js --zip",
+    "city": "node scripts/process.js --city",
     "dma": "node scripts/processdma.js --dma",
 
     "simplify:zip": "bash ./scripts/simplify.sh zip kml",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "install": "^0.12.2",
-    "npm": "^6.9.0"
+    "npm": "^6.9.0",
+    "readdirp": "^3.0.0"
   }
 }

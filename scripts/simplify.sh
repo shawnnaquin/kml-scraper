@@ -7,9 +7,6 @@ COMPLEX=dist/complex/$TYPE;
 
 COUNT=$(find $COMPLEX -name '*.kml' -maxdepth 1 -type f | wc -l);
 
-# echo "$DIRSIZE KB";
-# echo ${COUNT} Files;
-
 SECONDS=0
 i=0;
 total=0;
@@ -76,7 +73,7 @@ function ProgressBar {
     if [ $1 -eq $2 ]
         then
             printf "$prefix $per $bar $perdone    elapsed: $elapsed | time-left: $tl | total(est): $est    $1 / $2 - $3                                     \n";
-            echo "done"
+            echo "done $(du -hsc $SIMPLE)"
         else
             tput rmam
                 printf "$prefix $per $bar $perdone    elapsed: $elapsed | time-left: $tl | total(est): $est    $1 / $2 - $3                                     \r"
@@ -87,7 +84,6 @@ function ProgressBar {
 
 for f in ${COMPLEX}/*.kml ; do FILENAME=`basename ${f} .kml`;
 
-    i=$(($i+1));
     duration=$SECONDS
 
     {
@@ -95,8 +91,9 @@ for f in ${COMPLEX}/*.kml ; do FILENAME=`basename ${f} .kml`;
     	ogr2ogr -f GeoJSON ${SIMPLE}/${FILENAME}.json ${SIMPLE}/${FILENAME}.kml;
 	} &> /dev/null;
 
-	ProgressBar $i $COUNT $FILENAME $duration;
-
     rm ${SIMPLE}/${FILENAME}.kml;
+
+    ProgressBar $i $COUNT $FILENAME $duration;
+    i=$(($i+1));
 
 done;

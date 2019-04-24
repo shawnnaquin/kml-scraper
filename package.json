@@ -4,11 +4,22 @@
   "description": "",
   "main": "scripts/county.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "test": "du -hsc dist/simplified",
+
     "county": "node scripts/process.js --county",
     "zip": "node scripts/process.js --zip",
+    "process": "npm run county && npm run zip",
+
     "simplify:zip": "bash ./scripts/simplify.sh zip",
-    "simplify:county": "bash ./scripts/simplify.sh county"
+    "simplify:county": "bash ./scripts/simplify.sh county",
+    "simplify": "npm run simpilfy:county && npm run simplify:zip",
+
+    "all:county": "npm run county && npm run simplify:county",
+    "all:zip": "npm run zip && npm run simplify:zip",
+
+    "all": "npm run all:county && npm run all:zip"
+
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +28,8 @@
     "fse": "^4.0.1",
     "path": "^0.12.7",
     "read-xml": "^3.0.0",
-    "xml-js": "^1.6.11"
+    "xml-js": "^1.6.11",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "install": "^0.12.2",

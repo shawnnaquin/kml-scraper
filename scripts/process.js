@@ -2,89 +2,111 @@ const fse = require('fs-extra');
 const path = require('path');
 const xmlReader = require('read-xml');
 const convert = require('xml-js');
+
 const statefips = require('../src/statefips.json');
 
 let type = process.argv.includes('--county') ?
     'county' : 'zip';
 
+const DIST = path.resolve( __dirname, `../dist/complex/${type}/` );
+
 const FILE = type === 'county' ?
     path.resolve( __dirname, '../src/cb_2017_us_county_20m.kml') :
     path.resolve( __dirname, '../src/cb_2017_us_zcta510_500k.kml');
 
-
-const DIST = path.resolve( __dirname, `../dist/complex/${type}/` );
+let size = fse.statSync( FILE ).size;
 
 let dupes = [];
 
+let current = 0;
+let percent = '';
+let content = '';
+let downloaded = 0;
+
+let reset = () => {
+    current = 0;
+    percent = "[------------------------------]";
+    percent = percent.split('');
+};
+
+reset();
+
 fse.removeSync( DIST );
 
-// TODO
-// WORKING ON PROGRESS BARS
+let decodedXMLStream = fse.createReadStream( FILE ).pipe(
+    xmlReader.createStream()
+);
 
-// reset();
+decodedXMLStream.on( 'data', ( xmlStr ) => {
 
-// let downloaded;
-// let percent;
-// let content = '';
+    content += xmlStr;
+    downloaded += xmlStr.length;
 
-// let reset = () => {
-//     downloaded = 0;
-//     percent = `[                               ]`;
-// };
+    let factor = 100;
+    let dlSize = downloaded/factor;
+    let contentSize = size;
 
-// let size = fse.statSync( FILE ).size;
+    let per = Math.round( ( dlSize/(contentSize/10000) ) * 0.3 );
 
-// let decodedXMLStream = fse.createReadStream( FILE ).pipe(
-//     xmlReader.createStream()
-// );
+    // percent[ per + 1 ] = '#';
+    percent.fill('#', 1, per+1 );
 
-// percent = percent.split('');
+    let t = `${ percent.join('') }`;
 
-// decodedXMLStream.on( 'data', ( xmlStr ) => {
+    if (  dlSize/(contentSize/100000000000) > 999990000 ) {
+        process.stdout.write( `...reading... ${t} ${Math.round( per/3*10 )}%\n` );
+        process.stdout.write( 'done reading!\n' );
+    } else {
+        process.stdout.write( `...reading... ${t} ${Math.round( per/3*10 )}%\r` );
+    }
 
-//     content += xmlStr;
+});
 
-//     downloaded += xmlStr.length;
-//     let per = Math.round( downloaded / size * 30 );
-//     percent[ per + 1 ] = '#';
-
-//     let t = `${ percent.join('') }`;
-
-//     if (downloaded >= size ) {
-//         console.log( `done reading! ${t} 100%\r` );
-//     } else {
-//         process.stdout.write( `...reading... ${t} ${Math.round( per/3*10 )}%\r` );
-//     }
-
-// });
-
-// decodedXMLStream.on( 'end', ( ) => {
-//     done();
-// });
+decodedXMLStream.on( 'end', () => {
+    done( content );
+});
 
 let done = ( data ) => {
 
-    // reset();
-
-    console.log('processing...');
-
-    let xml = data.content;
+    reset();
+    console.log( 'converting...                                                         \n');
+    let xml = data;
     let result = JSON.parse( convert.xml2json( xml, { compact: true, spaces: 4 } ) );
     let places = result.kml.Document.Folder.Placemark;
 
-    // console.log( places );
+    size = Object.keys( places ).length;
 
-  // var proc = require('child_process').spawn('pbcopy');
-  // proc.stdin.write(xml);
-  // proc.stdin.end();
+    let dlSize = 0;
+
+    let timer;
+
+    let percentBar = () => {
+
+        dlSize+=1;
+
+        let per = Math.round( ( dlSize/size*100 ) * 0.3 );
+        // percent[ per + 1 ] = '#';
+        percent.fill('#', 1, per+1 );
+
+        let t = `${ percent.join('') }`;
+        // console.log( );
+        if (  dlSize/size*100 >= 99 ) {
+            clearTimeout( timer );
+            timer = setTimeout( ()=> {
+                process.stdout.write( `saving JSON : ${t} ${Math.round( per/3*10 )}%\n` );
+                console.log( `done saving!                                                `);
+            }, 1000 );
+        } else {
+            process.stdout.write( `processing : ${t} ${Math.round( per/3*10 )}%\r` );
+        }
+
+    };
 
     Object.keys( places ).forEach( ( place, placeIndex ) => {
 
         let $item = places[place];
         // let $item = places[0];
         let normalizedStateName;
-
-        // console.log($item);
 
         let rawName = $item.name._text.split(' ').join('_');
         let parsedName = rawName.split('<at><openparen>')[1].split('<closeparen>')[0];
@@ -126,6 +148,7 @@ let done = ( data ) => {
 
         newXML = convert.json2xml( newResult, { compact: true, ignoreComment: true, spaces: 0 } );
 
+
         if ( !dupes.includes( NAME ) ) {
 
             fse.ensureDir( DIST )
@@ -136,9 +159,8 @@ let done = ( data ) => {
                             fse.writeFile( FILE, newXML, function( err, data ) {
                                 if (err) {
                                     console.log( err );
-                                }
-                                else {
-                                    // console.log('updated!');
+                                } else {
+                                    percentBar();
                                 }
                             });
                         })
@@ -151,22 +173,10 @@ let done = ( data ) => {
                 });
             dupes.push( NAME );
         } else {
-            console.log( 'dupe!', NAME );
+            // console.log( 'dupe!', NAME );
+            // BLACK HOLE
         }
-
 
     });
 
 }
-
-xmlReader.readXML( fse.readFileSync( FILE ), function( err, data ) {
-
-    process.stdout.write( `reading...\r` );
-
-    if ( err ) {
-        console.error(err);
-    }
-
-    done( data );
-
-});

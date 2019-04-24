@@ -10,5 +10,7 @@ ___
 nielson topo:
 ```
 nielsentopo.json
+dmainfo.json
 ```
 https://github.com/simzou/nielsen-dma/blob/master/nielsentopo.json
+https://raw.githubusercontent.com/simzou/nielsen-dma/master/tv.json

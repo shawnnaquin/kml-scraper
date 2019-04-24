@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 PRECISION=0.001;
+GEOPRECISION=$(echo "$PRECISION * 6000" | bc)
 
 TYPE=$1;
 FILETYPE=$2;
@@ -15,7 +16,6 @@ i=0;
 total=0;
 
 rm -rf $SIMPLE && mkdir $SIMPLE
-rm -rf $TEMP && mkdir $TEMP
 
 function ProgressBar {
 	tput sc
@@ -90,10 +90,17 @@ for f in ${COMPLEX}/*.${FILETYPE} ; do FILENAME=`basename ${f} .${FILETYPE}`;
 
     i=$(($i+1));
 
-    {
-    	ogr2ogr -f libkml -simplify $PRECISION ${TEMP}/${FILENAME}.${FILETYPE} ${COMPLEX}/${FILENAME}.${FILETYPE};
-    	ogr2ogr -f GeoJSON ${SIMPLE}/${FILENAME}.json ${TEMP}/${FILENAME}.${FILETYPE};
-	} &> /dev/null;
+    if [ "${FILETYPE}" == "kml" ];
+        then
+            {
+                ogr2ogr -f libkml -simplify $PRECISION ${TEMP}/${FILENAME}.${FILETYPE} ${COMPLEX}/${FILENAME}.${FILETYPE};
+                ogr2ogr -f GeoJSON ${SIMPLE}/${FILENAME}.json ${TEMP}/${FILENAME}.${FILETYPE};
+            } &> /dev/null;
+        else
+            {
+                ogr2ogr -f GeoJSON -lco COORDINATE_PRECISION=${GEOPRECISION} ${SIMPLE}/${FILENAME}.json ${COMPLEX}/${FILENAME}.${FILETYPE};
+            } &> /dev/null;
+    fi
 
     duration=$SECONDS
     ProgressBar $i $COUNT $FILENAME $duration;

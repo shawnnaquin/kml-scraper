@@ -10,6 +10,9 @@ let type = `dma`;
 const DIST = path.resolve( __dirname, `../dist/complex/${type}` );
 const FILE = path.resolve( __dirname, `../dist/temp/${type}/geodma.json` );
 
+dmaFile = path.resolve( __dirname, `../src/dmainfo.json` );
+let dmainfo = JSON.parse( fse.readFileSync( dmaFile ) );
+
 fse.remove( DIST );
 
 process.stdout.write( `reading json... \r\n` );
@@ -26,8 +29,8 @@ class Template {
 let content = '';
 
 let total = 0;
-let current = 0;
-let percent = 0;
+// let current = 0;
+// let percent = 0;
 
 // let percentBar = () => {
 //
@@ -40,6 +43,7 @@ let done = () => {
 
     process.stdout.write( `parsing json... \r\n` );
     content = JSON.parse( content );
+
     total = Object.keys( content.features ).length;
 
     process.stdout.write( `parsed!\r\n`);
@@ -55,7 +59,14 @@ let done = () => {
         let $file = JSON.stringify( $template );
         let $id = $feature.properties.dma;
 
-        // tempArray.push($id);
+        dmainfo[$id] = {
+            ...dmainfo[$id],
+            ...$feature.properties
+        };
+
+        fse.writeFile( dmaFile, JSON.stringify( dmainfo, null, 4 ), ( err, data ) => {
+            if (err) { console.log( err ) }
+        });
 
         fse.ensureDir( DIST )
             .then( ( ) => {

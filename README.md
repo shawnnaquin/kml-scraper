@@ -5,6 +5,7 @@ npm run simplify:county
 npm run zip
 npm run simplify:zip
 ```
+see package.json for more scripts
 
 ____
 
@@ -17,15 +18,10 @@ finally, process each KML to geoJSON;
 
 ____
 
-download a kml file from:
+check readme in src folder for more info on sources.
+```
 https://www.census.gov/geographies/mapping-files/time-series/geo/kml-cartographic-boundary-files.html
-
-currently using:
-
-`src/cb_2017_us_county_20m.kml`
-
-`src/cb_2017_us_zcta510_500k.kml`
-
+```
 ____
 
 required CLI tools (mac/linux):
@@ -54,6 +50,21 @@ may take >1hr to install!
 
 ____
 
+the nielson DMA src is in topojson format which needs to be converted to geojson, you'll need the following tools to do that:
+```
+brew install python // if not already installed
+brew install geos
+brew install shapely
+```
+____
+
+test KML with:
+
 use Google Earth Pro - on Desktop PC/MAC to test:
 
 Google Earth -> file -> open -> choose .kml file
+___
+
+use GDAL desktop 
+
+( if you can get it to install, for extended visual tools )

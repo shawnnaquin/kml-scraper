@@ -2,16 +2,20 @@
 PRECISION=0.001;
 
 TYPE=$1;
+FILETYPE=$2;
+
 SIMPLE=dist/simplified/$TYPE;
 COMPLEX=dist/complex/$TYPE;
+TEMP=dist/temp/$TYPE;
 
-COUNT=$(find $COMPLEX -name '*.kml' -maxdepth 1 -type f | wc -l);
+COUNT=$(find $COMPLEX -name "*.$FILETYPE" -maxdepth 1 -type f | wc -l);
 
 SECONDS=0
 i=0;
 total=0;
 
 rm -rf $SIMPLE && mkdir $SIMPLE
+rm -rf $TEMP && mkdir $TEMP
 
 function ProgressBar {
 	tput sc
@@ -82,13 +86,16 @@ function ProgressBar {
 
 }
 
-for f in ${COMPLEX}/*.kml ; do FILENAME=`basename ${f} .kml`;
+for f in ${COMPLEX}/*.${FILETYPE} ; do FILENAME=`basename ${f} .${FILETYPE}`;
+
     i=$(($i+1));
+
     {
-    	ogr2ogr -f libkml -simplify $PRECISION ${SIMPLE}/${FILENAME}.kml ${COMPLEX}/${FILENAME}.kml;
-    	ogr2ogr -f GeoJSON ${SIMPLE}/${FILENAME}.json ${SIMPLE}/${FILENAME}.kml;
+    	ogr2ogr -f libkml -simplify $PRECISION ${TEMP}/${FILENAME}.${FILETYPE} ${COMPLEX}/${FILENAME}.${FILETYPE};
+    	ogr2ogr -f GeoJSON ${SIMPLE}/${FILENAME}.json ${TEMP}/${FILENAME}.${FILETYPE};
 	} &> /dev/null;
-    rm ${SIMPLE}/${FILENAME}.kml;
+
     duration=$SECONDS
     ProgressBar $i $COUNT $FILENAME $duration;
+
 done;

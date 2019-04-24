@@ -83,17 +83,12 @@ function ProgressBar {
 }
 
 for f in ${COMPLEX}/*.kml ; do FILENAME=`basename ${f} .kml`;
-
-    duration=$SECONDS
-
+    i=$(($i+1));
     {
     	ogr2ogr -f libkml -simplify $PRECISION ${SIMPLE}/${FILENAME}.kml ${COMPLEX}/${FILENAME}.kml;
     	ogr2ogr -f GeoJSON ${SIMPLE}/${FILENAME}.json ${SIMPLE}/${FILENAME}.kml;
 	} &> /dev/null;
-
     rm ${SIMPLE}/${FILENAME}.kml;
-
+    duration=$SECONDS
     ProgressBar $i $COUNT $FILENAME $duration;
-    i=$(($i+1));
-
 done;

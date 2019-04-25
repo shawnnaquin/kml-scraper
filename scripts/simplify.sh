@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-PRECISION=0.001;
-GEOPRECISION=$(echo "$PRECISION * 6000" | bc)
+PRECISION=$(node -p "require('./package.json').config.PRECISION ");
+GEOPRECISION=$(node -p "require('./package.json').config.GEOPRECISION ")
 
 TYPE=$1;
 FILETYPE=$2;
@@ -15,7 +15,8 @@ SECONDS=0
 i=0;
 total=0;
 
-rm -rf $SIMPLE && mkdir $SIMPLE
+rm -rf $SIMPLE && mkdir -p $SIMPLE
+mkdir -p $TEMP
 
 function ProgressBar {
 	tput sc

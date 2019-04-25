@@ -6,16 +6,20 @@ const readdirp = require('readdirp');
 
 const statefips = require('../src/statefips.json');
 
-let type = ( process.argv.includes('--county') ) ? 'county' : 'zip' ? ( process.argv.includes('--city') ) ? 'city' : '' : false;
+let type = ['--county','--zip', '--city']
+    .filter( (el) => { if( process.argv.includes(el) ) return el; }  )[0].replace('--','');
 
 const DIST = path.resolve( __dirname, `../dist/complex/${type}/` );
 
-let FILES = [ ];
+let FILES =  [ ];
+let FILES2 = [ ];
 
-let promiseArray = [];
-let dataArray = [];
+let promiseArray = [ ];
+let dataArray = [ ];
 
-let start = () => {
+let bar = '[------------------------------]';
+
+let start = ( ) => {
 
     fse.removeSync( DIST );
 
@@ -27,9 +31,24 @@ let start = () => {
 
     }
 
-    // TODO handle finish
+    FILES2 = [...FILES];
+
+    Promise.all( promiseArray )
+        .then( (v) => {
+            process.stdout.write('\n');
+            process.stdout.write(`done!\n`);
+        });
 
 };
+
+let percentBar = ( message=" reading  ", cur=0, total=0, percent=0, done=0 ) => {
+
+    let per = Math.round( percent * 0.3 )+1;
+    bar = bar.split('').fill( '#', 1, per );
+    bar = bar.join('')
+
+    process.stdout.write( `... ${message} ...    ${percent}% ${bar} ${100-percent}%         ${done} - ${total}     \r` );
+}
 
 let streamFile = ( FILE, idx ) => new Promise( ( resolve, reject ) => {
 
@@ -37,50 +56,144 @@ let streamFile = ( FILE, idx ) => new Promise( ( resolve, reject ) => {
             xmlReader.createStream()
         );
 
+        dataArray[idx] = {data:''};
+        process.stdout.write(`...  reading  ...\r`);
         decodedXMLStream.on( 'data', ( xmlStr ) => {
-
-            dataArray[idx] += xmlStr;
-            // downloaded += xmlStr.length;
-
-            // let factor = 100;
-            // let dlSize = downloaded/factor;
-            // let contentSize = size;
-
-            // let per = Math.round( ( dlSize/(contentSize/10000) ) * 0.3 );
-
-            // percent[ per + 1 ] = '#';
-            // percent.fill('#', 1, per+1 );
-
-            // let t = `${ percent.join('') }`;
-
-            // if (  dlSize/(contentSize/100000000000) > 999990000 ) {
-            //     process.stdout.write( `...reading... ${t} ${Math.round( per/3*10 )}%\n` );
-            //     process.stdout.write( 'done reading!\n' );
-            // } else {
-            //     process.stdout.write( `FILE: ${ FILE.split('/')[ FILE.split('/').length - 1 ] }    ${currentFileNum} of ${filesTotal}\n\r`);
-            //     process.stdout.write( `...reading... ${t} ${Math.round( per/3*10 )}%\r` );
-            // }
-
+            dataArray[idx].data += xmlStr.replace(/\r?\n|\r/g, '');
         });
 
-        console.log( FILE, idx );
-
         decodedXMLStream.on( 'end', () => {
-            processFile( FILE, idx, dataArray[idx], resolve, reject );
+            processFile( FILE, idx, dataArray[idx].data, resolve, reject );
         });
 
 });
 
 let processFile = ( FILE, idx, data, resolve, reject ) => {
 
-    setTimeout( ()=> {
-        resolve(true);
-        let remainingPromises = promiseArray.slice( idx ).length;
-        // console.log( `remain: ${remainingPromises}, cur: ${idx}` );
-        console.log( data )
-    }, 100 * idx );
+    process.stdout.write(`... converting ...\r`);
+
+    let xml = data;
+    let result = JSON.parse( convert.xml2json( xml, { compact: true, spaces: 4 } ) );
+    let places = result.kml.Document.Folder.Placemark;
+
+    let dupes = [];
+
+    if ( !Array.isArray( places ) ) {
+        places = [places];
+    }
+
+    let total = Object.keys(places).length;
+    let currentKey = 0;
+
+    Object.keys( places ).forEach( ( place, placeIndex ) => {
+
+        currentKey +=1;
+
+        let $item = places[place];
+        let normalizedStateName;
+
+        let rawName = $item.name._text.split(' ').join('_').split('/').join('-');
+        let parsedName = rawName.split('<at><openparen>')[1].split('<closeparen>')[0];
+        let lowerCaseName = parsedName.toLocaleLowerCase();
+        let normalizedName = lowerCaseName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+        for ( let $extra of $item.ExtendedData.SchemaData.SimpleData ) {
+
+            if ( $extra._attributes.name === 'STATEFP' ) {
+                normalizedStateName = statefips[$extra._text].split(' ').join('_').toLocaleLowerCase();
+            }
+
+        }
+
+        //
+        //
+
+        const NAME = normalizedStateName ? `${normalizedStateName}_${normalizedName}` : `${normalizedName}`;
+
+        let newResult = result;
+
+        delete newResult.kml.Document.Folder;
+        delete newResult.kml.Document.Style.IconStyle;
+        delete newResult.kml.Document.Style.LabelStyle;
+        delete newResult.kml.Document.Schema.SimpleField
+
+        delete $item.description;
+        delete $item.ExtendedData;
+
+        newResult.kml.Document.name = type;
+
+        $item._attributes.id = NAME;
+        $item.name._text = NAME;
+
+
+        newResult.kml.Document.Folder = {
+            name: NAME,
+            Placemark: [ $item ]
+        };
+
+        let newXML = xml;
+
+        newXML = convert.json2xml( newResult, { compact: true, ignoreComment: true, spaces: 0 } );
+
+        // //
+        // //
+        if( FILES.length === 1 ) {
+            let p = Math.round( currentKey / total * 100 );
+            percentBar( ' resolved', currentKey, total, p, currentKey );
+        } else {
+            process.stdout.write(`... saving ...\r`);
+        }
+
+        if ( !dupes.includes( NAME ) ) {
+
+            fse.ensureDir( DIST )
+                .then( ( ) => {
+                    const F = path.join( DIST, `/${ NAME }.kml` );
+                    fse.ensureFile( F )
+                        .then( ( ) => {
+                            fse.writeFile( F, newXML, function( err, data ) {
+                                if (err) {
+                                    reject(false);
+                                } else {
+                                    if( FILES.length === 1 ) {
+                                        process.stdout.write(`... saved ...\r`);
+                                    } else {
+                                    }
+                                }
+                            });
+                        })
+                        .catch( err => {
+                            console.error( err );
+                            reject(false);
+                        })
+                })
+                .catch( err => {
+                    console.error( err );
+                    reject(false);
+                });
+
+            dupes.push( NAME );
+
+        } else {
+            // console.log( 'dupe!', NAME );
+            // BLACK HOLE
+        }
+
+    });
+
+    FILES2.shift();
+
+    if( FILES.length > 1 ) {
+        let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
+        percentBar( ' resolved ', FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
+    }
+
+    resolve(idx);
+
 
 };
+
+process.stdout.write( `... spooling ...\r` );
 
 
 if ( type === 'county' || type === 'zip' ) {

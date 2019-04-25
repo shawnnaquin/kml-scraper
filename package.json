@@ -42,7 +42,15 @@
     "features:dma": "node scripts/featureCollection2features.js --dma",
     "topo:dma": "bash ./scripts/topo2geo.sh 'dma'",
 
-    "shp:neighborhood": "bash ./scripts/shp2kml.sh 'neighborhood' 'shp'"
+    "shp:neighborhood": "bash ./scripts/shp2kml.sh 'neighborhood' 'shp'",
+
+    "neighborhood": "npm run shp:neighborhood && npm run process:neighborhood && npm run simplify:neighborhood",
+    "dma": "npm run topo:dma && npm run features:dma && npm run simplify:dma",
+    "city": "npm run process:city && npm run simplify:city",
+    "zip": "npm run process:zip && npm run simplify:zip",
+    "county": "npm run process:county && npm run simplify:county",
+
+    "all": "WARNING: YOU'RE CRAZY!\n\n && npm run neighborhood && npm run dma && npm run city && npm run zip && npm run county"
 
   },
   "author": "",

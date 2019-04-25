@@ -4,20 +4,15 @@
   "description": "",
   "main": "scripts/county.js",
   "scripts": {
-
     "test": "du -hsc dist/simplified",
-
     "county": "node scripts/process.js --county",
     "zip": "node scripts/process.js --zip",
     "city": "node scripts/process.js --city",
     "dma": "node scripts/processdma.js --dma",
-
     "simplify:zip": "bash ./scripts/simplify.sh zip kml",
     "simplify:county": "bash ./scripts/simplify.sh county kml",
     "simplify:dma": "bash ./scripts/simplify.sh dma json",
-
     "topo:dma": "bash ./scripts/topodma.sh"
-
   },
   "author": "",
   "license": "ISC",

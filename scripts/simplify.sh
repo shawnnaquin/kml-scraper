@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
-PRECISION=$(node -p "require('./package.json').config.PRECISION ");
-GEOPRECISION=$(node -p "require('./package.json').config.GEOPRECISION ")
+
+PRECISION=$(node -p "require('./package.json').config.PRECISION");
+GEOPRECISION=$(node -p "require('./package.json').config.GEOPRECISION")
+
+DISTFOLDER=$(node -p "require('./package.json').config.DISTFOLDER");
+DISTSIMPLEFOLDER=$(node -p "require('./package.json').config.DISTSIMPLEFOLDER");
+DISTTEMPFOLDER=$(node -p "require('./package.json').config.DISTTEMPFOLDER");
+DISTCOMPLEXFOLDER=$(node -p "require('./package.json').config.DISTCOMPLEXFOLDER");
 
 TYPE=$1;
 FILETYPE=$2;
 
-SIMPLE=dist/simplified/$TYPE;
-COMPLEX=dist/complex/$TYPE;
-TEMP=dist/temp/$TYPE;
+SIMPLE=$DISTFOLDER/$DISTSIMPLEFOLDER/$TYPE;
+COMPLEX=$DISTFOLDER/$DISTCOMPLEXFOLDER/$TYPE;
+TEMP=$DISTFOLDER/$DISTTEMPFOLDER/$TYPE;
 
 COUNT=$(find $COMPLEX -name "*.$FILETYPE" -maxdepth 1 -type f | wc -l);
 

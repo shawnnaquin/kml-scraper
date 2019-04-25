@@ -4,12 +4,25 @@ const xmlReader = require('read-xml');
 const convert = require('xml-js');
 const readdirp = require('readdirp');
 
-const statefips = require('../src/statefips.json');
+const CONFIG = require( path.resolve( __dirname, '../package.json') ).config;
+
+const DISTFOLDER = CONFIG.DISTFOLDER;
+const DISTTEMPFOLODER = CONFIG.DISTTEMPFOLDER;
+const DISTCOMPLEXFOLDER = CONFIG.DISTCOMPLEXFOLDER;
+const DISTSIMPLEFOLDER = CONFIG.DISTSIMPLEFOLDER;
+
+const SRCFOLDER = CONFIG.SRCFOLDER;
+const SRCFIPS = CONFIG.SRCFIPS;
+const statefips = require( `../${SRCFOLDER}/${SRCFIPS}` );
+
+const SRCCOUNTY = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCCOUNTY}`);
+const SRCZCTA = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCZCTA}`);
+const SRCCITYFOLDER = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCCITYFOLDER}` );
 
 let type = ['--county','--zip', '--city']
     .filter( (el) => { if( process.argv.includes(el) ) return el; }  )[0].replace('--','');
 
-const DIST = path.resolve( __dirname, `../dist/complex/${type}/` );
+const DIST = path.resolve( __dirname, `../${DISTFOLDER}/${DISTCOMPLEXFOLDER}/${type}/` );
 
 let FILES =  [ ];
 let FILES2 = [ ];
@@ -115,7 +128,7 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
         delete newResult.kml.Document.Folder;
         delete newResult.kml.Document.Style.IconStyle;
         delete newResult.kml.Document.Style.LabelStyle;
-        delete newResult.kml.Document.Schema.SimpleField
+        delete newResult.kml.Document.Schema.SimpleField;
 
         delete $item.description;
         delete $item.ExtendedData;
@@ -190,26 +203,19 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
     resolve(idx);
 
-
 };
 
 process.stdout.write( `... spooling ...\r` );
 
-
 if ( type === 'county' || type === 'zip' ) {
 
-    FILES.push(
-        type === 'county' ?
-            path.resolve( __dirname, '../src/cb_2017_us_county_20m.kml') :
-            path.resolve( __dirname, '../src/cb_2017_us_zcta510_500k.kml')
-    );
-
+    FILES.push( type === 'county' ? SRCCOUNTY : SRCZCTA );
     start();
 
 } else if ( type === 'city' ) {
 
     readdirp(
-        path.resolve( __dirname, `../src/citykml`),
+        SRCCITYFOLDER,
         {
             type: 'files',
             fileFilter: [ '*.kml' ],

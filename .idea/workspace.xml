@@ -2,64 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="deeb7cab-f1a7-4d99-94fb-1be8c525dd35" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/utilities/percentbar.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/featureCollection2features.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/featureCollection2features.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/process.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/process.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/shp2kml.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/shp2kml.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/simplify.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simplify.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-AK.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-AL.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-AR.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-AZ.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-CA.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-CO.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-CT.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-DC.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-DE.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-FL.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-GA.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-HI.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-IA.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-ID.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-IL.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-IN.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-KS.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-KY.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-LA.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-MA.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-MD.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-ME.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-MI.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-MN.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-MO.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-MS.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-MT.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-NC.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-ND.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-NE.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-NH.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-NJ.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-NM.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-NV.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-NY.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-OH.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-OK.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-OR.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-PA.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-PR.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-RI.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-SC.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-SD.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-TN.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-TX.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-UT.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-VA.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-VT.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-WA.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-WI.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/neighborhood/ZillowNeighborhoods-WV.shp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,21 +14,41 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="315">
+                <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="564">
+              <caret line="42" column="8" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/featureCollection2features.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="36">
+              <caret line="14" column="49" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>duration</find>
-      <find>COMPLES</find>
-      <find>SRCNEIGHBORHOODFOLDER</find>
-      <find>Placemark</find>
-      <find>.placemark</find>
-      <find>rawName</find>
-      <find>Pric</find>
-      <find>resolve</find>
-      <find>Cdata</find>
-      <find>start</find>
-      <find>delete</find>
       <find>done</find>
       <find>p</find>
       <find>process.stdout</find>
@@ -102,6 +68,17 @@
       <find>document</find>
       <find>Virgi</find>
       <find>Greenville</find>
+      <find>eva</find>
+      <find>statefip</find>
+      <find>SRCABBREV</find>
+      <find>/</find>
+      <find>.split('/</find>
+      <find>shp2kml</find>
+      <find>topo2geo</find>
+      <find>featureCollection2features</find>
+      <find>kml</find>
+      <find>top</find>
+      <find>1 k</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -129,7 +106,6 @@
         <option value="$PROJECT_DIR$/dist/geoSimple/county/geojson.json" />
         <option value="$PROJECT_DIR$/src/out.json" />
         <option value="$PROJECT_DIR$/scripts/topo2geojson.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.sh" />
         <option value="$PROJECT_DIR$/scripts/topodma.sh" />
         <option value="$PROJECT_DIR$/utilities/topo2geojson.py" />
@@ -138,7 +114,6 @@
         <option value="$PROJECT_DIR$/src/dmainfo.json" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_4.sh" />
         <option value="$PROJECT_DIR$/dist/simplified/county/alabama_autauga.json" />
-        <option value="$PROJECT_DIR$/src/README.md" />
         <option value="$PROJECT_DIR$/scripts/topo2geo.sh" />
         <option value="$PROJECT_DIR$/scripts/processdma.js" />
         <option value="$PROJECT_DIR$/scripts/percentbar.sh" />
@@ -148,10 +123,12 @@
         <option value="$PROJECT_DIR$/dist/temp/neighborhood/ZillowNeighborhoods-NE.kml" />
         <option value="$PROJECT_DIR$/scripts/simplify.sh" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.json" />
-        <option value="$PROJECT_DIR$/scripts/process.js" />
         <option value="$PROJECT_DIR$/scripts/shp2kml.sh" />
         <option value="$PROJECT_DIR$/scripts/featureCollection2features.js" />
+        <option value="$PROJECT_DIR$/src/README.md" />
+        <option value="$PROJECT_DIR$/scripts/process.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -171,6 +148,21 @@
             <path>
               <item name="xml" type="b2602c69:ProjectViewProjectNode" />
               <item name="xml" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xml" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xml" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xml" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xml" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xml" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xml" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -215,7 +207,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.features:dma">
     <configuration name="features:dma" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -299,15 +291,16 @@
       <workItem from="1556121850199" duration="97000" />
       <workItem from="1556121958275" duration="23274000" />
       <workItem from="1556211386119" duration="10748000" />
-      <workItem from="1556224262331" duration="1593000" />
+      <workItem from="1556224262331" duration="6418000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73912000" />
+    <option name="totallyTimeSpent" value="78737000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.789424" visible="true" weight="0.17447917" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -362,11 +355,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dist/simplified/neighborhood/ak_south_fork.json" />
-    <entry file="file://$PROJECT_DIR$/dist/simplified/neighborhood/ak_mid-hillside.json" />
-    <entry file="file://$PROJECT_DIR$/dist/simplified/neighborhood/ak_bjerremark.json" />
-    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_etowah.json" />
-    <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_cullman.json" />
     <entry file="file://$PROJECT_DIR$/dist/simplified/neighborhood/al_melrose.json" />
     <entry file="file://$PROJECT_DIR$/dist/simplified/neighborhood/al_mcvoy.json" />
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_huffman-o'malley-s.kml" />
@@ -386,13 +374,6 @@
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_abbott_loop.kml" />
     <entry file="file://$PROJECT_DIR$/src/neighborhoodshp/ZillowNeighborhoods-AK.prj">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/process.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_dallas.json" />
     <entry file="file://$PROJECT_DIR$/dist/simplified/county/alabama_conecuh.json" />
@@ -417,38 +398,10 @@
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_airport_heights-s.kml" />
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_abbott_loop-s.kml" />
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ZillowNeighborhoods-AK.kml" />
-    <entry file="file://$PROJECT_DIR$/scripts/shp2kml.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="19" lean-forward="true" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/simplify.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="12" lean-forward="true" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/featureCollection2features.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/simplified/dma/500.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -462,27 +415,100 @@
     <entry file="file://$PROJECT_DIR$/src/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="315">
-            <caret line="21" column="17" lean-forward="true" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+          <first_editor relative-caret-position="330">
+            <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nielsentopo.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dmainfo.json">
+    <entry file="file://$PROJECT_DIR$/utilities/percentbar.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14970">
-          <caret line="998" column="24" lean-forward="true" selection-start-line="998" selection-start-column="24" selection-end-line="998" selection-end-column="24" />
+        <state relative-caret-position="120">
+          <caret line="8" column="28" lean-forward="true" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/stateabbrev.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        <state relative-caret-position="255">
+          <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dmainfo.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1004">
+          <caret line="998" column="24" selection-start-line="998" selection-start-column="24" selection-end-line="998" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/temp/dma/nielsentopo.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret column="3253" selection-start-column="3253" selection-end-column="3253" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/topo2geo.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="60" lean-forward="true" selection-start-line="14" selection-start-column="60" selection-end-line="14" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/shp2kml.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="69" selection-start-line="33" selection-start-column="69" selection-end-line="33" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nielsentopo.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16214">
+          <caret line="21" column="16" lean-forward="true" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/featureCollection2features.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="14" column="49" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/simplify.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="139" lean-forward="true" selection-start-line="39" selection-start-column="139" selection-end-line="39" selection-end-column="139" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/process.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="530">
+          <caret line="204" lean-forward="true" selection-start-line="204" selection-end-line="204" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="564">
+          <caret line="42" column="8" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="315">
+            <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

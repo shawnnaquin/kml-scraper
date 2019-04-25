@@ -13,7 +13,9 @@ const DISTSIMPLEFOLDER = CONFIG.DISTSIMPLEFOLDER;
 
 const SRCFOLDER = CONFIG.SRCFOLDER;
 const SRCFIPS = CONFIG.SRCFIPS;
+const SRCABBREV = CONFIG.SRCABBREV;
 const statefips = require( `../${SRCFOLDER}/${SRCFIPS}` );
+const stateabbrev = require( `../${SRCFOLDER}/${SRCABBREV}` );
 
 const SRCCOUNTY = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCCOUNTY}`);
 const SRCZCTA = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCZCTA}`);
@@ -149,7 +151,7 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
         let normalizedStateName;
 
         let rawName = $item.name._text ? $item.name._text : $item.name._cdata;
-        let rawSplitName = rawName.split(' ').join('_').split('/').join('-');
+        let rawSplitName = rawName.split(' ').join('_').split('/').join('-').split('\'').join('').split("\"").join('');
         let parsedName = rawSplitName.split('<at><openparen>')[1] ? rawName.split('<at><openparen>')[1].split('<closeparen>')[0] : rawSplitName;
         let lowerCaseName = parsedName.toLocaleLowerCase();
         let normalizedName = lowerCaseName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
@@ -160,12 +162,13 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
                 normalizedStateName = statefips[$extra._text].split(' ').join('_').toLocaleLowerCase();
             } else if ( $extra._attributes.name === 'State' ) {
                 normalizedStateName = $extra._text.split(' ').join('_').toLocaleLowerCase();
+                normalizedStateName = stateabbrev[ Object.keys( stateabbrev ).filter( state=>state===normalizedStateName.toLocaleUpperCase())[0] ];
+                normalizedStateName = normalizedStateName.toLocaleLowerCase().split(' ').join('_').split('/').join('-').normalize('NFD').replace(/[\u0300-\u036f]/g, "");
             }
 
         }
-        //
-        const NAME = normalizedStateName ? `${normalizedStateName}_${normalizedName}` : `${normalizedName}`;
 
+        const NAME = normalizedStateName ? `${normalizedStateName}_${normalizedName}` : `${normalizedName}`;
 
         let newResult = result;
 

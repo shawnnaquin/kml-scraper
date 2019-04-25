@@ -23,3 +23,11 @@ src/citykml/*.kml
 ```
 
 https://www2.census.gov/geo/tiger/GENZ2017/kml/
+
+___
+
+State Abbreviations
+```
+src/stateabbrev.json
+```
+https://gist.github.com/mshafrir/2646763

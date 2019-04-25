@@ -49,8 +49,8 @@
     "city": "npm run process:city && npm run simplify:city",
     "zip": "npm run process:zip && npm run simplify:zip",
     "county": "npm run process:county && npm run simplify:county",
-
-    "all": "WARNING: YOU'RE CRAZY!\n\n && npm run neighborhood && npm run dma && npm run city && npm run zip && npm run county"
+    "warning": "echo \"WARNING: YOU'RE CRAZY!\n\n\"",
+    "all": "npm run warning && npm run neighborhood && npm run dma && npm run city && npm run zip && npm run county"
 
   },
   "author": "",

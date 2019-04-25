@@ -1,6 +1,6 @@
 # KML to geoJSON
-#### converts kml from census.gov to geoJson
-*process large KML files containing several locations to smaller individual KML files of individual locations*
+#### converts census data from multiple sources to geoJson
+*process large src files containing several locations to smaller individual geoJSON files*
 ___
 ### Update Source Files
 `src/*/*.(json|kml)`

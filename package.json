@@ -4,15 +4,13 @@
   "description": "",
   "main": "scripts/county.js",
   "config": {
-
     "DISTFOLDER": "dist",
     "DISTTEMPFOLDER": "temp",
     "DISTCOMPLEXFOLDER": "complex",
     "DISTSIMPLEFOLDER": "simplified",
-
+    "DISTRIBUTIONZIPFOLDER": "processed-zip-files",
     "PRECISION": 0.001,
     "GEOPRECISION": 6,
-
     "SRCFOLDER": "src",
     "SRCDMA": "nielsentopo.json",
     "SRCDMAINFO": "dmainfo.json",
@@ -22,41 +20,33 @@
     "SRCCOUNTY": "cb_2017_us_county_20m.kml",
     "SRCCITYFOLDER": "citykml",
     "SRCNEIGHBORHOODFOLDER": "neighborhoodshp"
-
   },
   "scripts": {
-
     "test": "du -hsc dist/simplified",
-
+    "semver": "npm --no-git-tag-version version patch",
     "process:county": "node scripts/process.js --county",
     "process:zip": "node scripts/process.js --zip",
     "process:city": "node scripts/process.js --city",
     "process:neighborhood": "node scripts/process.js --neighborhood",
-
     "simplify:zip": "bash ./scripts/simplify.sh zip kml",
     "simplify:county": "bash ./scripts/simplify.sh county kml",
     "simplify:dma": "bash ./scripts/simplify.sh dma json",
     "simplify:city": "bash ./scripts/simplify.sh city kml",
     "simplify:neighborhood": "bash ./scripts/simplify.sh 'neighborhood' 'kml'",
-
     "features:dma": "node scripts/featureCollection2features.js --dma",
     "topo:dma": "bash ./scripts/topo2geo.sh 'dma'",
-
     "shp:neighborhood": "bash ./scripts/shp2kml.sh 'neighborhood' 'shp'",
-
     "neighborhood": "npm run shp:neighborhood && npm run process:neighborhood && npm run simplify:neighborhood",
     "dma": "npm run topo:dma && npm run features:dma && npm run simplify:dma",
     "city": "npm run process:city && npm run simplify:city",
     "zip": "npm run process:zip && npm run simplify:zip",
     "county": "npm run process:county && npm run simplify:county",
-
     "warning": "echo \"WARNING: YOU'RE CRAZY!\n\n\"",
     "beer": "echo \"Grab a beer, this is going to take minute...\n\n\"",
-
-    "all": "npm run warning && npm run neighborhood && npm run dma && npm run city && npm run zip && npm run county",
+    "all": "npm run warning && npm run neighborhood && npm run dma && npm run city && npm run zip && npm run county && npm run pack",
     "all:complex": "npm run shp:neighborhood && npm run process:neighborhood && npm run topo:dma && npm run features:dma && npm run process:city && npm run process:zip && npm run process:county",
-    "all:simplify": "npm run beer && npm run simplify:neighborhood && npm run simplify:dma && npm run simplify:city && npm run simplify:zip && npm run simplify:county"
-
+    "all:simplify": "npm run beer && npm run simplify:neighborhood && npm run simplify:dma && npm run simplify:city && npm run simplify:zip && npm run simplify:county",
+    "pack": "npm run semver && node ./scripts/zip.pack.js"
   },
   "author": "",
   "license": "ISC",
@@ -69,6 +59,8 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "bestzip": "^2.1.2",
+    "glob": "^7.1.3",
     "install": "^0.12.2",
     "node-gyp": "^4.0.0",
     "npm": "^6.9.0",

@@ -177,10 +177,15 @@ npm run features:dma
 npm run simplify:dma
 ```
 **Notes:**
-*- dmas src are topoJSON!*
-*- dmas are single files!*
-*- dmas are parsed after `topo:dma` into a single feature collection*
-*- the feature collection is then paresd `features:dma` into single feature files*
+
+- *dmas src are `topoJSON`!*
+
+- *dmas are single files!*
+
+- dmas are parsed after `topo:dma` into a single `FeatureCollection` file*
+
+- the `FeatureCollection` is then paresd `features:dma` into individual `Feature` files, each containing exactly one feature or place*
+
 ___
 ### County/Zip/City
 ```
@@ -188,11 +193,16 @@ npm run process:county
 npm run simplify:county
 ```
 **Notes:**
-*- cities are a folder!*
-*- zip/county are single files!*
-*- src is KML format!*
-*- you can update the precision of the simplify command in `simplify.sh`*
-*- `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`*
+
+- *city's src container is a `folder` of `KML`!*
+
+- *zip / county's conatainers are single files!*
+
+- *src is `KML` format!*
+
+- *you can update the precision of the simplify command in the `package.json.config`*
+
+- `npm run simplify:(county|zip)` must be run *after* `npm run (county|zip)`
 ____
 
 ### Neighborhood
@@ -202,10 +212,14 @@ npm run process:neighborhood
 npm run simplify:neighborhood
 ```
 **Notes:**
-*- neighborhoods are a folder!*
-*- src is SHP format!*
-*- you can update the precision of the simplify command in `simplify.sh`*
-*- `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`*
+
+- *neighborhood's src container is a `folder`!*
+
+- *src is `SHP` format!*
+
+- you can update the `PRECISION` of the simplify command in `simplify.sh`*
+
+- `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`*
 ____
 
 

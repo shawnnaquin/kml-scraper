@@ -43,6 +43,7 @@ TODO: it is possible that running scripts in random order will overwrite the DIS
  }
  ```
 ___
+
 ### Script Descriptions
 
 - These scripts are listed in order that you should execute them
@@ -61,6 +62,8 @@ the argument is either a `flag (node)` or `parameter (sh)`
 sh ... *.sh 'dma'
 npm run ... --dma
 ```
+___
+
 #### shp2kml.sh
 
 converts a folder of `SHP` files to `KML`;
@@ -80,7 +83,7 @@ converts a folder of `SHP` files to `KML`;
 - each state has its own `SHP` file containing multiple neighborhoods
 - each State's `SHP` file is converted to an equivilent `KML` file
 - each state is output to `/${DIST}/${TEMP}/${TYPE}`
-
+___
 
 #### topo2geo.sh
 
@@ -102,6 +105,7 @@ converts a single `topoJSON` file to a `geoJSON` `FeatureCollection`
 - the dma src file is converted to a single equivalent `geoJSON`  `geoJSON` file containing a`FeatureCollection` with multiple `Feature`
 - output to `/${DIST}/${TEMP}/${TYPE}`
 
+___
 
 #### featureCollection2features.js
 
@@ -121,6 +125,8 @@ converts a single `geoJSON` `FeatureCollection` file to individual `geoJSON` `Fe
 
 - you have a single file of a `geoJSON` `FeatureCollection` you want to output as individual `geoJSON` `Feature` files
 - output to `/${DIST}/${COMPLEX}/${TYPE}`
+
+___
 
 #### process.js
 
@@ -146,6 +152,8 @@ _
 - you have a src folder or src `kml` file you'd like to chop up into individual `kml` files;
 - output to `/${DIST}/${COMPLEX}/${TYPE}`
 
+___
+
 #### simplify.sh
 
 converts a folder of complex `kml` files to simplified `geoJSON` files, which `Google Maps JS API` can read!
@@ -167,6 +175,37 @@ converts a folder of complex `kml` files to simplified `geoJSON` files, which `G
 
 - you've already chopped a bunch of large KML or geoJSON into smaller geoJSON files!
 - output to `/${DIST}/${SIMPLE}/${TYPE}`
+___
+
+#### zip.pack.js
+
+packs all directories in `SIMPLE` folder into zip files, one for each folder. Then combines all `./*.zip` in the `package.config.DISTRIBUTIONZIPFOLDER` into one zip file;
+
+- this is to hand-off production-ready zip files!
+- the zips are tagged with the year and package version
+- to bump the version use `npm run semver`
+- you must manually bump the package version;
+- the `npm run all` command bumps the package version automatically
+
+##### example 
+
+- you've simplified all your data and you're ready to hand-it off;
+
+___
+
+#### npm run semver
+
+a package script that bumps the package version one patch level;
+
+##### argument: `type = 'name'`, `format = ( 'json' | 'kml' )`
+
+- bumps the package version used for name of output zip files
+
+##### example 
+
+- bump it whevenever you want;
+- the output zip files from `npm run pack` will be tagged with the version
+- the `npm run all` command auotmatically bumps the version;
 
 ___
 ### DMAs
@@ -221,6 +260,30 @@ npm run simplify:neighborhood
 
 - `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`*
 ____
+
+### Other `npm run` commands
+
+- `npm run warning`: outputs a warning message
+- `npm run beer`: outputs a message that it'll take a while
+- `npm run all`: do all the things, set-it-and-forget-it
+- `npm run all:complex`: do all the things, but don't simplify
+- `npm run all:simplify`: simplify all the files already in `complex` dir
+- `npm run pack`: generate zip files with `zip.pack.js`, see that readme above
+- `npm run semver`: bump the package version by a patch level, see readme above
+
+___
+
+**Notes:**
+
+- *neighborhood's src container is a `folder`!*
+
+- *src is `SHP` format!*
+
+- you can update the `PRECISION` of the simplify command in `simplify.sh`*
+
+- `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`*
+____
+
 
 
 ### Required CLI tools ( Mac/Linux ):

@@ -1,119 +1,156 @@
+
 # KML to geoJSON
-#### converts kml from census.gov to geoJson
-*process large KML files containing several locations to smaller individual KML files of individual locations*
+#### converts census data from multiple sources to geoJson
+*process large src files containing several locations to smaller individual geoJSON files*
 ___
 ### Update Source Files
 `src/*/*.(json|kml)`
+
 https://www.census.gov/geographies/mapping-files/time-series/geo/kml-cartographic-boundary-files.html
 
-*see src/README.md*
+see `src/README.md` for more
 ___
 ### Adjusting Config variables
 ```
 package.json.config
-```
+``` 
+
 - make sure you know what you're doing if you adjust these!
+
 - the scripts are pretty agnostic;
+
 - be wary of using a single file where you need a folder of files and vice/versa
+
 - you should be able to use `shp2kml`, `simplify.sh`, `topo2geo`, `process.js`, `featureCollection2feaatures.js`
 to do what you think they should
+___
+### Dist directories
+
+- **SIMPLE**: the finalized production files, ready to ship, grouped by type and named
+- **COMPLEX**: lossless `kml` files containing exactly one place or feature each, grouped by type and named
+- **TEMP**: stores intermediate files of different types for processing, grouped by type
+
+TODO: it is possible that running scripts in random order will overwrite the DIST/TEMP/TYPE/* data, resulting in immediate stdout errors, exits and kill cmds while processing
+
+```
+"config": {
+
+    "DISTFOLDER": "dist",
+    "DISTTEMPFOLDER": "temp",
+    "DISTCOMPLEXFOLDER": "complex",
+    "DISTSIMPLEFOLDER": "simplified",
+    ... 
+ }
+ ```
 ___
 ### Script Descriptions
 
 - These scripts are listed in order that you should execute them
 
-- all files should be processed to individual json or KML before the running simplify!
+- all files should be processed to individual `(topo|geo)JSON` or `KML` before the running simplify!
 
-- the type argument should be kept the same throughout the different commands (usually)
+- the `type = 'name'` argument should be kept the same throughout the different commands for each group -- *usually*
 
+```
+`type = 'dma'
+`type = 'neighborhood'
+`type = 'city'
+```
+the argument is either a `flag (node)` or `parameter (sh)`
+```
+sh ... *.sh 'dma'
+npm run ... --dma
+```
 #### shp2kml.sh
 
-converts a folder of shp files to kml;
+converts a folder of `SHP` files to `KML`;
 
-##### argument: `type`=name
+##### argument: `type = 'name'`
 
+- src input container: **folder**
 - output file extension: `kml`
 - output file data type: `kml`
 - input file extension: `shp`
 - input file data type: `shp`
 - output stored in `/${DIST}/${TEMP}/${TYPE}`
 - input filename used as output filename
-- operates on folder of `SHP` files
 
 ##### example 
 
-- each state has its own SHP file containing multiple neighborhoods
+- each state has its own `SHP` file containing multiple neighborhoods
 - each State's `SHP` file is converted to an equivilent `KML` file
 - each state is output to `/${DIST}/${TEMP}/${TYPE}`
 
 
 #### topo2geo.sh
 
-converts a single topoJSON file to a geoJSON featureCollection
+converts a single `topoJSON` file to a `geoJSON` `FeatureCollection`
 
-##### argument: `type`=name
+##### argument: `type = 'name'`
 
+- src input container: **file**
 - output file extension: `json`
 - output file data type: `geoJSON`
 - input file extension: `json`
 - input file data type: `topoJSON`
 - output stored in `/${DIST}/${TEMP}/${TYPE}`
 - input filename used as output filename
-- operates on a single topoJSON file
 
 ##### example 
 
-- each dma region is stored in one file as topoJSON;
-- the dma src file is converted to a single equivilent geoJSON FeatureCollection json file
+- each dma region is stored in one file as `topoJSON`;
+- the dma src file is converted to a single equivalent `geoJSON`  `geoJSON` file containing a`FeatureCollection` with multiple `Feature`
 - output to `/${DIST}/${TEMP}/${TYPE}`
 
 
 #### featureCollection2features.js
 
-converts a single geoJSON featureCollection file to individual geoJSON feature files;
+converts a single `geoJSON` `FeatureCollection` file to individual `geoJSON` `Feature` files;
 
-##### argument: `type`=name
+##### argument: `type = 'name'`
 
+- src input container: **file** 
 - output file extension: `json`
 - output file data type: `geoJSON Feature`
 - input file extension: `json`
-- input file data type: `geoJSON Feature Collection`
+- input file data type: `geoJSON FeatureCollection`
 - output stored in `/${DIST}/${COMPLEX}/${TYPE}`
 - individual filenames calculated from input src file
-- operates on a single geoJSON Feature Collection file
 
 ##### example 
 
-- you have a single file of a geoJSON feature collection you want to output as individual geoJSON feature files
+- you have a single file of a `geoJSON` `FeatureCollection` you want to output as individual `geoJSON` `Feature` files
 - output to `/${DIST}/${COMPLEX}/${TYPE}`
 
 #### process.js
 
-converts a folder of KML or a single file of KML features to individual lossles KML feature files.
+converts a folder of large `KML` files (each containing multiple features) or a single `KML` file (containing multiple features) to individual lossles KML files. Each output file contains exactly one feature or place after processing.
 
-##### argument: `type`=name
+##### argument: `type = 'name'`
 
 - THIS IS A BAD MAMA JAMMA - the real workhorse.
-- promisified for extra processing power.
-- this command may exceed your javascript heap memory.
+--*promiseified for extra processing power*--
+- process.js may exceed your javascript heap memory (depending on src files).
+_
+- src input container: **file|folder**
 - output file extension: `kml`
 - output file data type: `kml`
 - input file extension: `kml`
 - input file data type: `kml`
 - output stored in `/${DIST}/${COMPLEX}/${TYPE}`
 - individual filenames calculated from input src file(s)
-- operates on a single KML src file -OR- folder of individual KML files!
+- operates on a single `kml` src file -OR- folder of individual `kml` files!
 
 ##### example 
 
-- you have a src folder or src kml file you'd like to chop up into individual files;
+- you have a src folder or src `kml` file you'd like to chop up into individual `kml` files;
 - output to `/${DIST}/${COMPLEX}/${TYPE}`
 
 #### simplify.sh
 
-converts a folder of complex KML files to simplified geoJSON files
+converts a folder of complex `kml` files to simplified `geoJSON` files, which `Google Maps JS API` can read!
 
-##### argument: `type`=name, `format`=(json|kml)
+##### argument: `type = 'name'`, `format = ( 'json' | 'kml' )`
 
 - finally!
 - this command takes a loonnnng time to run.
@@ -140,10 +177,15 @@ npm run features:dma
 npm run simplify:dma
 ```
 **Notes:**
-*- dmas src are topoJSON!*
-*- dmas are single files!*
-*- dmas are parsed after `topo:dma` into a single feature collection*
-*- the feature collection is then paresd `features:dma` into single feature files*
+
+- *dmas src are `topoJSON`!*
+
+- *dmas are single files!*
+
+- dmas are parsed after `topo:dma` into a single `FeatureCollection` file*
+
+- the `FeatureCollection` is then paresd `features:dma` into individual `Feature` files, each containing exactly one feature or place*
+
 ___
 ### County/Zip/City
 ```
@@ -151,11 +193,16 @@ npm run process:county
 npm run simplify:county
 ```
 **Notes:**
-*- cities are a folder!*
-*- zip/county are single files!*
-*- src is KML format!*
-*- you can update the precision of the simplify command in `simplify.sh`*
-*- `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`*
+
+- *city's src container is a `folder` of `KML`!*
+
+- *zip / county's conatainers are single files!*
+
+- *src is `KML` format!*
+
+- *you can update the precision of the simplify command in the `package.json.config`*
+
+- `npm run simplify:(county|zip)` must be run *after* `npm run (county|zip)`
 ____
 
 ### Neighborhood
@@ -165,10 +212,14 @@ npm run process:neighborhood
 npm run simplify:neighborhood
 ```
 **Notes:**
-*- neighborhoods are a folder!*
-*- src is SHP format!*
-*- you can update the precision of the simplify command in `simplify.sh`*
-*- `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`*
+
+- *neighborhood's src container is a `folder`!*
+
+- *src is `SHP` format!*
+
+- you can update the `PRECISION` of the simplify command in `simplify.sh`*
+
+- `npm run simplify:(county|zip)` must be run after `npm run (county|zip)`*
 ____
 
 

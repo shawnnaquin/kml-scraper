@@ -24,6 +24,25 @@ package.json.config
 - you should be able to use `shp2kml`, `simplify.sh`, `topo2geo`, `process.js`, `featureCollection2feaatures.js`
 to do what you think they should
 ___
+### Dist directories
+
+- **SIMPLE**: the finalized production files, ready to ship, grouped by type and named
+- **COMPLEX**: lossless `kml` files containing exactly one place or feature each, grouped by type and named
+- **TEMP**: stores intermediate files of different types for processing, grouped by type
+
+TODO: it is possible that running scripts in random order will overwrite the DIST/TEMP/TYPE/* data, resulting in immediate stdout errors, exits and kill cmds while processing
+
+```
+"config": {
+
+    "DISTFOLDER": "dist",
+    "DISTTEMPFOLDER": "temp",
+    "DISTCOMPLEXFOLDER": "complex",
+    "DISTSIMPLEFOLDER": "simplified",
+    ... 
+ }
+ ```
+___
 ### Script Descriptions
 
 - These scripts are listed in order that you should execute them

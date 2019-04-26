@@ -1,6 +1,3 @@
 dist
 node_modules
 DS_STORE
-src/*.kml
-!src/*.json
-!src/*.md

@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="deeb7cab-f1a7-4d99-94fb-1be8c525dd35" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/featureCollection2features.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/featureCollection2features.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/process.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/process.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/simplify.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simplify.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,25 +15,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="53" column="97" selection-start-line="53" selection-start-column="97" selection-end-line="53" selection-end-column="97" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>p</find>
-      <find>process.stdout</find>
-      <find>decoded</find>
-      <find>writeFile</find>
-      <find>&lt;name</find>
       <find>DIST</find>
       <find>result</find>
       <find>Document.Documen</find>
@@ -55,6 +44,11 @@
       <find>1 k</find>
       <find>agnostin</find>
       <find>top</find>
+      <find>zipdist</find>
+      <find>greenville</find>
+      <find>nameParser</find>
+      <find>split</find>
+      <find>parsedName</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -97,13 +91,16 @@
         <option value="$PROJECT_DIR$/utilities/percentbar.sh" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.json" />
         <option value="$PROJECT_DIR$/dist/temp/neighborhood/ZillowNeighborhoods-NE.kml" />
-        <option value="$PROJECT_DIR$/scripts/simplify.sh" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.json" />
         <option value="$PROJECT_DIR$/scripts/shp2kml.sh" />
-        <option value="$PROJECT_DIR$/scripts/featureCollection2features.js" />
         <option value="$PROJECT_DIR$/src/README.md" />
-        <option value="$PROJECT_DIR$/scripts/process.js" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/scripts/simplify.sh" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_5.js" />
+        <option value="$PROJECT_DIR$/utilities/nameparser.js" />
+        <option value="$PROJECT_DIR$/scripts/process.js" />
+        <option value="$PROJECT_DIR$/utilities/scriptutils.js" />
+        <option value="$PROJECT_DIR$/scripts/featureCollection2features.js" />
         <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
@@ -118,17 +115,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="xml" type="b2602c69:ProjectViewProjectNode" />
               <item name="xml" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="xml" type="b2602c69:ProjectViewProjectNode" />
-              <item name="xml" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="xml" type="b2602c69:ProjectViewProjectNode" />
@@ -144,13 +137,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSON&#10;Bash&#10;JavaScript" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JavaScript&#10;JSON&#10;Bash" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/utilities" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -194,6 +186,16 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="neighborhood" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="neighborhood" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="process:zip" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -224,23 +226,13 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="topo:dma" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="topo:dma" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.neighborhood" />
         <item itemvalue="npm.simplify:zip" />
         <item itemvalue="npm.process:zip" />
         <item itemvalue="npm.simplify:dma" />
         <item itemvalue="npm.features:dma" />
-        <item itemvalue="npm.topo:dma" />
       </list>
     </recent_temporary>
   </component>
@@ -267,20 +259,20 @@
       <workItem from="1556121850199" duration="97000" />
       <workItem from="1556121958275" duration="23274000" />
       <workItem from="1556211386119" duration="10748000" />
-      <workItem from="1556224262331" duration="7923000" />
+      <workItem from="1556224262331" duration="9179000" />
+      <workItem from="1556287331563" duration="2423000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80242000" />
+    <option name="totallyTimeSpent" value="83921000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.789424" visible="true" weight="0.17447917" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7884797" visible="true" weight="0.17447917" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.21057601" side_tool="true" visible="true" weight="0.17447917" />
+      <window_info id="npm" order="2" sideWeight="0.2115203" side_tool="true" visible="true" weight="0.17447917" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295562" />
@@ -331,9 +323,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dist/simplified/neighborhood/al_melrose.json" />
-    <entry file="file://$PROJECT_DIR$/dist/simplified/neighborhood/al_mcvoy.json" />
-    <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_huffman-o'malley-s.kml" />
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_government_hill-s.kml" />
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_glen_alps-s.kml" />
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_chugiak-s.kml" />
@@ -374,34 +363,11 @@
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_airport_heights-s.kml" />
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ak_abbott_loop-s.kml" />
     <entry file="file://$PROJECT_DIR$/dist/temp/neighborhood/ZillowNeighborhoods-AK.kml" />
-    <entry file="file://$PROJECT_DIR$/dist/simplified/dma/500.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/dma/500.json" />
     <entry file="file://$PROJECT_DIR$/src/statefips.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="330">
-            <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utilities/percentbar.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="28" lean-forward="true" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -412,24 +378,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dmainfo.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1004">
-          <caret line="998" column="24" selection-start-line="998" selection-start-column="24" selection-end-line="998" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/temp/dma/nielsentopo.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
           <caret column="3253" selection-start-column="3253" selection-end-column="3253" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/topo2geo.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="60" lean-forward="true" selection-start-line="14" selection-start-column="60" selection-end-line="14" selection-end-column="60" />
         </state>
       </provider>
     </entry>
@@ -440,29 +392,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nielsentopo.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16214">
-          <caret line="21" column="16" lean-forward="true" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package-lock.json">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/simplify.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" column="139" lean-forward="true" selection-start-line="39" selection-start-column="139" selection-end-line="39" selection-end-column="139" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/process.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="204" lean-forward="true" selection-start-line="204" selection-end-line="204" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -474,17 +405,86 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utilities/percentbar.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/simplify.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="74" lean-forward="true" selection-start-line="27" selection-start-column="74" selection-end-line="27" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/topo2geo.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="15" lean-forward="true" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/simplified/neighborhood/texas_feather_ridge.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nielsentopo.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="240">
+            <caret line="16" selection-start-line="15" selection-end-line="15" selection-end-column="67" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dmainfo.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="1021" column="12" lean-forward="true" selection-start-line="1021" selection-start-column="12" selection-end-line="1021" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="32" lean-forward="true" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/process.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="684">
+          <caret line="171" lean-forward="true" selection-start-line="171" selection-end-line="171" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilities/scriptutils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/featureCollection2features.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="14" column="49" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
+        <state relative-caret-position="487">
+          <caret line="96" column="58" selection-start-line="96" selection-start-column="58" selection-end-line="96" selection-end-column="58" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="53" column="97" selection-start-line="53" selection-start-column="97" selection-end-line="53" selection-end-column="97" />
+        <state relative-caret-position="351">
+          <caret line="33" column="69" lean-forward="true" selection-start-line="33" selection-start-column="69" selection-end-line="33" selection-end-column="69" />
         </state>
       </provider>
     </entry>

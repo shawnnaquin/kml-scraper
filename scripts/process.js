@@ -20,6 +20,7 @@ const stateabbrev = require( `../${SRCFOLDER}/${SRCABBREV}` );
 const SRCCOUNTY = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCCOUNTY}`);
 const SRCZCTA = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCZCTA}`);
 const SRCCITYFOLDER = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCCITYFOLDER}` );
+const nameParser = require( path.resolve( __dirname, `../utilities/scriptutils.js`) ).nameparser;
 
 let type = ['--county','--zip', '--city', '--neighborhood']
     .filter( (el) => { if( process.argv.includes(el) ) return el; }  )[0].replace('--','');
@@ -151,19 +152,16 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
         let normalizedStateName;
 
         let rawName = $item.name._text ? $item.name._text : $item.name._cdata;
-        let rawSplitName = rawName.split(' ').join('_').split('/').join('-').split('\'').join('').split("\"").join('');
-        let parsedName = rawSplitName.split('<at><openparen>')[1] ? rawName.split('<at><openparen>')[1].split('<closeparen>')[0] : rawSplitName;
-        let lowerCaseName = parsedName.toLocaleLowerCase();
-        let normalizedName = lowerCaseName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        let rawSplitName = rawName.split('<at><openparen>')[1] ? rawName.split('<at><openparen>')[1].split('<closeparen>')[0] : rawName;
+        let normalizedName = nameParser( rawSplitName );
 
         for ( let $extra of $item.ExtendedData.SchemaData.SimpleData ) {
 
             if ( $extra._attributes.name === 'STATEFP' ) {
-                normalizedStateName = statefips[$extra._text].split(' ').join('_').toLocaleLowerCase();
+                normalizedStateName = nameParser( statefips[$extra._text] );
             } else if ( $extra._attributes.name === 'State' ) {
-                normalizedStateName = $extra._text.split(' ').join('_').toLocaleLowerCase();
-                normalizedStateName = stateabbrev[ Object.keys( stateabbrev ).filter( state=>state===normalizedStateName.toLocaleUpperCase())[0] ];
-                normalizedStateName = normalizedStateName.toLocaleLowerCase().split(' ').join('_').split('/').join('-').normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                normalizedStateName = stateabbrev[ Object.keys( stateabbrev ).filter( state => state === $extra._text.toLocaleUpperCase() )[0] ];
+                normalizedStateName = nameParser( normalizedStateName );
             }
 
         }

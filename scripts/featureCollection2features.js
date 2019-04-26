@@ -16,6 +16,8 @@ const DISTSIMPLEFOLDER = CONFIG.DISTSIMPLEFOLDER;
 
 const statefips = require( path.resolve( __dirname, `../${SRCFOLDER}/${SRCFIPS}` ) );
 
+const nameParser = require( path.resolve( __dirname, `../utilities/scriptutils.js` ) ).nameparser;
+
 let type = ['--dma']
     .filter( (el) => { if( process.argv.includes(el) ) {
         return el;
@@ -85,9 +87,11 @@ let done = () => {
             if (err) { console.log( err ) }
         });
 
+    	const parsedName = nameParser( dmainfo[$id]['dma1'] );
+
         fse.ensureDir( DIST )
             .then( ( ) => {
-                const FILE = path.join( DIST, `/${$id}.json` );
+                const FILE = path.join( DIST, `/${parsedName}.json` );
                 fse.ensureFile( FILE )
                     .then( ( ) => {
                         fse.writeFile( FILE, $file, ( err, data ) => {

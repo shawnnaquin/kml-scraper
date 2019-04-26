@@ -43,7 +43,7 @@ for f in ${COMPLEX}/*.${FILETYPE} ; do FILENAME=`basename ${f} .${FILETYPE}`;
 
     end_time="$(date -u +%s)";
     elapsed="$(($end_time-$start_time))";
-
+#    echo "$i $COUNT $FILENAME $elapsed";
     source "utilities/percentbar.sh" $i $COUNT $FILENAME $elapsed;
 
 done;

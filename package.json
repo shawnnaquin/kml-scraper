@@ -43,10 +43,10 @@
     "county": "npm run process:county && npm run simplify:county",
     "warning": "echo \"WARNING: YOU'RE CRAZY!\n\n\"",
     "beer": "echo \"Grab a beer, this is going to take minute...\n\n\"",
-    "all": "npm run warning && npm run neighborhood && npm run dma && npm run city && npm run zip && npm run county && npm run pack",
+    "all": "npm run warning && npm run neighborhood && npm run dma && npm run city && npm run zip && npm run county && npm run semver && npm run pack",
     "all:complex": "npm run shp:neighborhood && npm run process:neighborhood && npm run topo:dma && npm run features:dma && npm run process:city && npm run process:zip && npm run process:county",
     "all:simplify": "npm run beer && npm run simplify:neighborhood && npm run simplify:dma && npm run simplify:city && npm run simplify:zip && npm run simplify:county",
-    "pack": "npm run semver && node ./scripts/zip.pack.js"
+    "pack": "node ./scripts/zip.pack.js"
   },
   "author": "",
   "license": "ISC",

@@ -4,3 +4,4 @@ DS_STORE
 src/*.kml
 !src/*.json
 !src/*.md 
+.idea

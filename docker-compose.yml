@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  node:
+    image: node:latest
+    working_dir: /home/nodejs/app
+    volumes:
+       - .:/home/nodejs/app
+    command: ["tail", "-f", "/dev/null"]

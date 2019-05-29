@@ -4,7 +4,7 @@
   "description": "",
   "main": "scripts/county.js",
   "config": {
-    "DISTFOLDER": "dist",
+    "DISTFOLDER": "./dist",
     "DISTTEMPFOLDER": "temp",
     "DISTCOMPLEXFOLDER": "complex",
     "DISTSIMPLEFOLDER": "simplified",
@@ -21,9 +21,18 @@
     "SRCCITYFOLDER": "citykml",
     "SRCNEIGHBORHOODFOLDER": "neighborhoodshp"
   },
+
   "scripts": {
-    "test": "du -hsc dist/simplified",
-    "semver": "npm --no-git-tag-version version patch",
+
+    "setup-docker": "docker pull node:latest",
+    "up-node": "docker-compose up -d",
+
+    "node": "node.sh $PORT",
+
+    "start": "echo \"hello world\"",
+    "test": "ls -lh --block-size=M ./dist/simplified",
+
+    "semver": "npm --no-gitdocker-compose exec node npm run features:dmatag-version version patch",
     "process:county": "node scripts/process.js --county",
     "process:zip": "node scripts/process.js --zip",
     "process:city": "node scripts/process.js --city",
@@ -33,7 +42,7 @@
     "simplify:dma": "bash ./scripts/simplify.sh dma json",
     "simplify:city": "bash ./scripts/simplify.sh city kml",
     "simplify:neighborhood": "bash ./scripts/simplify.sh 'neighborhood' 'kml'",
-    "features:dma": "node scripts/featureCollection2features.js --dma",
+    "features:dma": "node ./scripts/featureCollection2features.js --dma",
     "topo:dma": "bash ./scripts/topo2geo.sh 'dma'",
     "shp:neighborhood": "bash ./scripts/shp2kml.sh 'neighborhood' 'shp'",
     "neighborhood": "npm run shp:neighborhood && npm run process:neighborhood && npm run simplify:neighborhood",

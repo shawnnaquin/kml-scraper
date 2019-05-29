@@ -27,7 +27,7 @@
     "setup-docker": "docker pull node:latest",
     "up-node": "docker-compose up -d",
 
-    "node": "node.sh $PORT",
+    "node": "bash noderun.sh $NAME",
 
     "start": "echo \"hello world\"",
     "test": "ls -lh --block-size=M ./dist/simplified",

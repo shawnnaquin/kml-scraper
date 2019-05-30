@@ -26,6 +26,9 @@
     "node:pull": "docker pull node:latest",
     "node:enter": "docker-compose exec node-service sh",
 
+    "gdal:pull": "docker pull geographica/gdal2:latest",
+    "gdal:enter": "docker-compose exec gdal-service sh",
+
     "docker:down": "docker-compose down",
     "docker:up": "docker-compose up -d",
     "docker:test": "docker-compose exec node-service echo \"hello world\"",

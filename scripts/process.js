@@ -60,6 +60,7 @@ let start = ( ) => {
                     .then( (v) => {
                         process.stdout.write('\n');
                         process.stdout.write(`done!\n`);
+                        process.exit();
                     });
 
             // } else {

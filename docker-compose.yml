@@ -1,10 +1,12 @@
 version: '3'
 
 services:
-  node:
+  node-service:
     image: node:latest
     working_dir: /home/nodejs/app
     container_name: kml-scraper-node
     volumes:
        - .:/home/nodejs/app
     command: ["tail", "-f", "/dev/null"]
+    tty: true
+    stdin_open: true

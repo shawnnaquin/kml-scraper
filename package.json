@@ -1,6 +1,6 @@
 {
   "name": "xml",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "scripts/county.js",
   "config": {
@@ -21,21 +21,22 @@
     "SRCCITYFOLDER": "citykml",
     "SRCNEIGHBORHOODFOLDER": "neighborhoodshp"
   },
-
   "scripts": {
-
-    "setup-docker": "docker pull node:latest",
-    "up-node": "docker-compose up -d",
-
-    "start": "docker-compose exec kml-scraper-node 'echo \"hello world\"'",
-    "test": "docker-compose exec kml-scraper-node 'ls -lh --block-size=M ./dist/simplified'",
-
-    "semver": "npm --no-gitdocker-compose exec node npm run features:dmatag-version version patch",
-    "process:county": "node scripts/process.js --county",
-    "process:zip": "node scripts/process.js --zip",
-    "process:city": "node scripts/process.js --city",
-    "process:neighborhood": "node scripts/process.js --neighborhood",
-
+    "node:pull": "docker pull node:latest",
+    "node:up": "docker-compose up -d",
+    "node:enter": "docker-compose exec node-service sh",
+    "docker:down": "docker-compose down",
+    "start": "docker-compose exec node-service echo \"hello world\"",
+    "test": "docker-compose exec node-service ls -lh --block-size=M ./dist/simplified",
+    "resize": "printf '\\e[8;30;100t'",
+    "pack": "docker-compose exec node-service node ./scripts/zip.pack.js",
+    "semver": "docker-compose exec node-service npm --no-git-tag-version version patch",
+    "warning": "docker-compose exec node-service echo \"WARNING: YOU'RE CRAZY!\n\n\"",
+    "beer": "docker-compose exec node-service echo \"Grab a beer, this is going to take minute...\n\n\"",
+    "process:county": "docker-compose exec node-service node scripts/process.js --county",
+    "process:zip": "docker-compose exec node-service node scripts/process.js --zip",
+    "process:city": "docker-compose exec node-service node scripts/process.js --city",
+    "process:neighborhood": "docker-compose exec node-service node scripts/process.js --neighborhood",
     "simplify:zip": "bash ./scripts/simplify.sh zip kml",
     "simplify:county": "bash ./scripts/simplify.sh county kml",
     "simplify:dma": "bash ./scripts/simplify.sh dma json",
@@ -44,19 +45,14 @@
     "features:dma": "node ./scripts/featureCollection2features.js --dma",
     "topo:dma": "bash ./scripts/topo2geo.sh 'dma'",
     "shp:neighborhood": "bash ./scripts/shp2kml.sh 'neighborhood' 'shp'",
-
     "neighborhood": "npm run shp:neighborhood && npm run process:neighborhood && npm run simplify:neighborhood",
     "dma": "npm run topo:dma && npm run features:dma && npm run simplify:dma",
     "city": "npm run process:city && npm run simplify:city",
     "zip": "npm run process:zip && npm run simplify:zip",
     "county": "npm run process:county && npm run simplify:county",
-    "warning": "echo \"WARNING: YOU'RE CRAZY!\n\n\"",
-    "beer": "echo \"Grab a beer, this is going to take minute...\n\n\"",
     "all": "npm run warning && npm run neighborhood && npm run dma && npm run city && npm run zip && npm run county && npm run semver && npm run pack",
     "all:complex": "npm run shp:neighborhood && npm run process:neighborhood && npm run topo:dma && npm run features:dma && npm run process:city && npm run process:zip && npm run process:county",
-    "all:simplify": "npm run beer && npm run simplify:neighborhood && npm run simplify:dma && npm run simplify:city && npm run simplify:zip && npm run simplify:county",
-    "pack": "node ./scripts/zip.pack.js"
-
+    "all:simplify": "npm run beer && npm run simplify:neighborhood && npm run simplify:dma && npm run simplify:city && npm run simplify:zip && npm run simplify:county"
   },
   "author": "",
   "license": "ISC",

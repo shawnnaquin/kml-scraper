@@ -28,12 +28,11 @@
 
     "docker:down": "docker-compose down",
     "docker:up": "docker-compose up -d",
+    "docker:test": "docker-compose exec node-service echo \"hello world\"",
 
-    "start": "docker-compose exec node-service echo \"hello world\"",
-    "test": "docker-compose exec node-service ls -lh --block-size=M ./dist/simplified",
+    "sizeof": "docker-compose exec node-service ls -lh --block-size=M ./dist/simplified",
     "resize": "printf '\\e[8;30;150t'",
 
-    "pack": "docker-compose exec node-service node ./scripts/zip.pack.js",
     "semver": "docker-compose exec node-service npm --no-git-tag-version version patch",
     "warning": "docker-compose exec node-service echo \"WARNING: YOU'RE CRAZY!\n\n\"",
     "beer": "docker-compose exec node-service echo \"Grab a beer, this is going to take minute...\n\n\"",
@@ -52,6 +51,8 @@
     "simplify:dma": "bash ./scripts/simplify.sh dma json",
     "simplify:city": "bash ./scripts/simplify.sh city kml",
     "simplify:neighborhood": "bash ./scripts/simplify.sh 'neighborhood' 'kml'",
+
+    "pack": "docker-compose exec node-service node ./scripts/zip.pack.js",
 
     "neighborhood": "npm run shp:neighborhood && npm run process:neighborhood && npm run simplify:neighborhood",
     "dma": "npm run topo:dma && npm run features:dma && npm run simplify:dma",

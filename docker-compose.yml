@@ -10,3 +10,12 @@ services:
     command: ["tail", "-f", "/dev/null"]
     tty: true
     stdin_open: true
+  gdal-service:
+    image: geographica/gdal2:latest
+    working_dir: /data
+    container_name: kml-scraper-gdal
+    volumes:
+      - .:/data
+    command: ["tail", "-f", "/dev/null"]
+    tty: true
+    stdin_open: true

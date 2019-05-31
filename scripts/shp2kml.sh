@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 start_time="$(date -u +%s)";
 
-PRECISION=$(node -p "require('./package.json').config.PRECISION");
+PRECISION=$(cat './package.json' | grep -E '\bPRECISION\b'| awk '{print$2}' | cut -d '"' -f2 | cut -d ',' -f1);
+
 TYPE=$1;
 FILETYPE=$2;
 

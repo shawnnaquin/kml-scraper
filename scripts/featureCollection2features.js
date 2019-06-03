@@ -24,7 +24,10 @@ let type = ['--dma']
     } }  )[0].replace('--','');
 
 const DIST = path.resolve( __dirname, `../${DISTFOLDER}/${DISTCOMPLEXFOLDER}/${type}` );
-const SRCFILE = eval(`process.env.npm_package_config_SRC${type.toLocaleUpperCase()}`);
+const SRCFILE = CONFIG[ `SRC${type.toLocaleUpperCase()}` ];
+
+console.log( SRCFILE );
+
 const FILE = path.resolve( __dirname, `../${DISTFOLDER}/${DISTTEMPFOLDER}/${type}/${SRCFILE}` );
 
 const dmaFile = type === 'dma' ?  path.resolve( __dirname, `../${SRCFOLDER}/${SRCDMAINFO}` ) : null;
@@ -122,4 +125,3 @@ stream.on( 'data', ( data ) => {
 stream.on( 'end', ( ) => {
     done();
 });
-

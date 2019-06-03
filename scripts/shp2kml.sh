@@ -1,21 +1,21 @@
-#!/usr/bin/env bash
+!/usr/bin/env bash
 start_time="$(date -u +%s)";
 
-PRECISION=$(cat './package.json' | grep -E '\bPRECISION\b'| awk '{print$2}' | cut -d '"' -f2 | cut -d ',' -f1);
+PRECISION=$( source "utilities/readjson.sh" PRECISION );
 
 TYPE=$1;
 FILETYPE=$2;
 
-DISTFOLDER=$(node -p "require('./package.json').config.DISTFOLDER");
-DISTTEMPFOLDER=$(node -p "require('./package.json').config.DISTTEMPFOLDER");
+DISTFOLDER=$( source "utilities/readjson.sh" DISTFOLDER );
+DISTTEMPFOLDER=$( source "utilities/readjson.sh" DISTTEMPFOLDER );
 
 TEMP=$DISTFOLDER/$DISTTEMPFOLDER/$TYPE;
 
-SRCFOLDER=$(node -p "require('./package.json').config.SRCFOLDER ");
+SRCFOLDER=$( source "utilities/readjson.sh" SRCFOLDER );
 SRC='';
 
 if [ $TYPE == 'neighborhood' ]; then
-    SRC=$(node -p "require('./package.json').config.SRCNEIGHBORHOODFOLDER");
+    SRC=$( source "utilities/readjson.sh" "SRCNEIGHBORHOODFOLDER" );
 fi;
 
 COUNT=$(find "${SRCFOLDER}/${SRC}" -name "*.$FILETYPE" -maxdepth 1 -type f | wc -l);
@@ -39,5 +39,5 @@ for f in ${SRCFOLDER}/${SRC}/*.${FILETYPE} ; do FILENAME=`basename ${f} .${FILET
     elapsed="$(($end_time-$start_time))";
 
     source "utilities/percentbar.sh" $i $COUNT $FILENAME $elapsed;
-
-done;
+done
+exit;

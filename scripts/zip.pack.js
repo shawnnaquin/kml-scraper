@@ -75,6 +75,7 @@ glob( `${SRCZIPFOLDER}/*`, { }, ( err, folders ) => {
             }).then( () => {
                 // it be zipped!
                 process.stdout.write('all done                                                             \r\n');
+                process.exit();
             }).catch( ( err ) => {
                 // console.error( err.stack );
             });

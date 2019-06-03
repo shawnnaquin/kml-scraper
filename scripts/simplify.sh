@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 start_time="$(date -u +%s)";
 
-PRECISION=$(node -p "require('./package.json').config.PRECISION");
-GEOPRECISION=$(node -p "require('./package.json').config.GEOPRECISION")
+PRECISION=$( source "utilities/readjson.sh" PRECISION );
+GEOPRECISION=$( source "utilities/readjson.sh" GEOPRECISION );
 
-DISTFOLDER=$(node -p "require('./package.json').config.DISTFOLDER");
-DISTSIMPLEFOLDER=$(node -p "require('./package.json').config.DISTSIMPLEFOLDER");
-DISTTEMPFOLDER=$(node -p "require('./package.json').config.DISTTEMPFOLDER");
-DISTCOMPLEXFOLDER=$(node -p "require('./package.json').config.DISTCOMPLEXFOLDER");
+DISTFOLDER=$( source "utilities/readjson.sh" DISTFOLDER );
+DISTSIMPLEFOLDER=$( source "utilities/readjson.sh" DISTSIMPLEFOLDER );
+DISTTEMPFOLDER=$( source "utilities/readjson.sh" DISTTEMPFOLDER );
+DISTCOMPLEXFOLDER=$( source "utilities/readjson.sh" DISTCOMPLEXFOLDER );
 
 TYPE=$1;
 FILETYPE=$2;
@@ -16,7 +16,9 @@ SIMPLE=$DISTFOLDER/$DISTSIMPLEFOLDER/$TYPE;
 COMPLEX=$DISTFOLDER/$DISTCOMPLEXFOLDER/$TYPE;
 TEMP=$DISTFOLDER/$DISTTEMPFOLDER/$TYPE;
 
-COUNT=$(find $COMPLEX -name "*.$FILETYPE" -maxdepth 1 -type f | wc -l);
+COUNT=$(find $COMPLEX -maxdepth 1 -type f -name "*.$FILETYPE" | wc -l);
+find DIR_NAME -type f | wc -l
+
 
 SECONDS=0
 i=0;
@@ -47,3 +49,4 @@ for f in ${COMPLEX}/*.${FILETYPE} ; do FILENAME=`basename ${f} .${FILETYPE}`;
     source "utilities/percentbar.sh" $i $COUNT $FILENAME $elapsed;
 
 done;
+exit;

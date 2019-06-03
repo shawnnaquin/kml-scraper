@@ -11,7 +11,9 @@ services:
     tty: true
     stdin_open: true
   gdal-service:
-    image: geographica/gdal2:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     working_dir: /data
     container_name: kml-scraper-gdal
     volumes:

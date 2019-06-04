@@ -214,6 +214,7 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
         const F = path.join( DIST, `/${ NAME }.kml` );
         // console.log( newXML );
+        console.log( F );
 
         fse.ensureFile( F )
             .then( ( ) => {
@@ -223,6 +224,7 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
                         console.log( err );
                         process.exit();
                     } else {
+
                         if( FILES.length === 1 ) {
                             newXML = '';
                             process.stdout.write(`... saved ...\r`);

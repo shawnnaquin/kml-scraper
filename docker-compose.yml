@@ -6,8 +6,7 @@ services:
     working_dir: /home/nodejs/app
     container_name: kml-scraper-node
     volumes:
-       - .:/home/nodejs/app
-    command: ["tail", "-f", "/dev/null"]
+       - '/Users/shawn/Documents/freelance/systems/kml-scraper/:/home/nodejs/app/'
     tty: true
     stdin_open: true
   gdal-service:

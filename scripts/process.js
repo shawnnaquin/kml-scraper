@@ -60,7 +60,6 @@ let start = ( ) => {
                     .then( (v) => {
                         process.stdout.write('\n');
                         process.stdout.write(`done!\n`);
-                        process.exit();
                     });
 
             // } else {
@@ -211,13 +210,11 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
         if ( !dupes.includes( NAME ) ) {
 
-
         const F = path.join( DIST, `/${ NAME }.kml` );
-        // console.log( newXML );
-        console.log( F );
 
         fse.ensureFile( F )
             .then( ( ) => {
+
                 fse.writeFile( path.join( DIST, `/${ NAME }.kml` ), newXML, function( err, data ) {
                     if (err) {
                         reject(false);
@@ -227,9 +224,13 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
                         if( FILES.length === 1 ) {
                             newXML = '';
-                            process.stdout.write(`... saved ...\r`);
+                        } else {
+                            FILES2.shift();
+                            let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
+                            percentBar( ' resolved ', FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
                         }
 
+                        resolve();
                     }
                 })
             })
@@ -246,15 +247,6 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
         }
 
     });
-
-    FILES2.shift();
-
-    if( FILES.length > 1 ) {
-        let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
-        percentBar( ' resolved ', FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
-    }
-
-    resolve();
 
 };
 

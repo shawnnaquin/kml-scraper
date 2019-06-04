@@ -199,14 +199,14 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
         let newXML = convert.json2xml( newResult, { compact: true, ignoreComment: true, spaces: 0 } );
         // console.log( newXML );
 
-        newResult = '';
+        // newResult = '';
 
-        if( FILES.length === 1 ) {
-            let p = Math.round( currentKey / total * 100 );
-            percentBar( ' resolved', currentKey, total, p, currentKey );
-        } else {
-            process.stdout.write(`... saving ...\r`);
-        }
+        // if( FILES.length === 1 ) {
+        //     let p = Math.round( currentKey / total * 100 );
+        //     percentBar( ' resolved', currentKey, total, p, currentKey );
+        // } else {
+        //     process.stdout.write(`... saving ...\r`);
+        // }
 
         if ( !dupes.includes( NAME ) ) {
 
@@ -222,12 +222,13 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
                         process.exit();
                     } else {
 
-                        if( FILES.length === 1 ) {
+                        if( FILES.length === 0 ) {
                             newXML = '';
+                            process.stdout.write(`... saving ...\r`);
                         } else {
-                            FILES2.shift();
-                            let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
-                            percentBar( ' resolved ', FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
+                            // FILES2.shift();
+                            // let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
+                            // percentBar( ' resolved ', FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
                         }
 
                         resolve();

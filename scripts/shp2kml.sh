@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 start_time="$(date -u +%s)";
 
 PRECISION=$( source "utilities/readjson.sh" PRECISION );
@@ -18,7 +18,7 @@ if [ $TYPE == 'neighborhood' ]; then
     SRC=$( source "utilities/readjson.sh" "SRCNEIGHBORHOODFOLDER" );
 fi;
 
-COUNT=$(find "${SRCFOLDER}/${SRC}" -name "*.$FILETYPE" -maxdepth 1 -type f | wc -l);
+COUNT=$(find "${SRCFOLDER}/${SRC}" -maxdepth 1 -name "*.$FILETYPE" -type f | wc -l);
 
 SECONDS=0
 i=0;

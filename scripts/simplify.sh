@@ -17,8 +17,6 @@ COMPLEX=$DISTFOLDER/$DISTCOMPLEXFOLDER/$TYPE;
 TEMP=$DISTFOLDER/$DISTTEMPFOLDER/$TYPE;
 
 COUNT=$(find $COMPLEX -maxdepth 1 -type f -name "*.$FILETYPE" | wc -l);
-find DIR_NAME -type f | wc -l
-
 
 SECONDS=0
 i=0;
@@ -28,7 +26,7 @@ rm -rf $SIMPLE && mkdir -p $SIMPLE;
 mkdir -p $TEMP && mkdir -p $COMPLEX;
 
 for f in ${COMPLEX}/*.${FILETYPE} ; do FILENAME=`basename ${f} .${FILETYPE}`;
-
+    # echo " $PRECISION ${TEMP}/${FILENAME}-s.${FILETYPE} ${COMPLEX}/${FILENAME}.${FILETYPE}"
     i=$(($i+1));
 
     if [ "${FILETYPE}" == "kml" ];

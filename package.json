@@ -36,7 +36,7 @@
 
     "sizeof": "docker-compose exec node-service ls -lh --block-size=M ./dist/simplified",
     "resize": "printf '\\e[8;30;150t'",
-
+    "clean": "rm -rf ./dist/*",
     "semver": "docker-compose exec node-service npm --no-git-tag-version version patch",
     "warning": "docker-compose exec node-service echo \"WARNING: YOU'RE CRAZY!\n\n\"",
     "beer": "docker-compose exec node-service echo \"Grab a beer, this is going to take minute...\n\n\"",
@@ -51,7 +51,7 @@
     "process:neighborhood": "docker-compose exec node-service node scripts/process.js --neighborhood",
 
     "simplify:zip": "docker-compose exec gdal-service bash ./scripts/simplify.sh zip kml",
-    "simplify:county": "docker-compose exec gdal-service bash ./scripts/simplify.sh county kml",
+    "simplify:county": "docker-compose exec gdal-service bash scripts/simplify.sh county kml",
     "simplify:dma": "docker-compose exec gdal-service bash ./scripts/simplify.sh dma json",
     "simplify:city": "docker-compose exec gdal-service bash ./scripts/simplify.sh city kml",
     "simplify:neighborhood": "docker-compose exec gdal-service bash ./scripts/simplify.sh 'neighborhood' 'kml'",

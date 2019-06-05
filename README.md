@@ -1,5 +1,8 @@
 
 # KML to geoJSON
+## DOCKERIFIED~
+*see package.json*
+
 #### converts census data from multiple sources to geoJson
 *process large src files containing several locations to smaller individual geoJSON files*
 ___

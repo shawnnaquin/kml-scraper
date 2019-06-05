@@ -39,5 +39,5 @@ for f in ${SRCFOLDER}/${SRC}/*.${FILETYPE} ; do FILENAME=`basename ${f} .${FILET
     elapsed="$(($end_time-$start_time))";
 
     source "utilities/percentbar.sh" $i $COUNT $FILENAME $elapsed;
-done
+done;
 exit;

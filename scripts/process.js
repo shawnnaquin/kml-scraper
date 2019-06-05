@@ -46,6 +46,8 @@ let start = ( ) => {
 
             // if ( type !== 'neighborhood' ) {
 
+                FILES2 = [...FILES];
+
                 for ( FILE of FILES ) {
 
                     promiseArray.push(
@@ -54,7 +56,6 @@ let start = ( ) => {
 
                 }
 
-                FILES2 = [...FILES];
 
                 Promise.all( promiseArray )
                     .then( (v) => {
@@ -112,8 +113,7 @@ let streamFile = ( FILE, idx ) => new Promise( ( resolve, reject ) => {
 
 let processFile = ( FILE, idx, data, resolve, reject ) => {
 
-    process.stdout.write(`... converting ...\r`);
-    // console.log( FILE );
+    // process.stdout.write(`... converting ...\r`);
 
     let xml = data;
     let result = JSON.parse( convert.xml2json( xml, { compact: true, spaces: 4 } ) );
@@ -140,12 +140,6 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
 
     Object.keys( places ).forEach( ( place, placeIndex ) => {
-
-
-
-
-
-        currentKey +=1;
 
         let $item = places[place];
         // let $item = places[0];
@@ -199,7 +193,7 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
         let newXML = convert.json2xml( newResult, { compact: true, ignoreComment: true, spaces: 0 } );
         // console.log( newXML );
 
-        // newResult = '';
+        newResult = '';
 
         // if( FILES.length === 1 ) {
         //     let p = Math.round( currentKey / total * 100 );
@@ -208,46 +202,46 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
         //     process.stdout.write(`... saving ...\r`);
         // }
 
+        currentKey +=1;
+
         if ( !dupes.includes( NAME ) ) {
 
-        const F = path.join( DIST, `/${ NAME }.kml` );
-
-        fse.ensureFile( F )
-            .then( ( ) => {
-
-                fse.writeFile( path.join( DIST, `/${ NAME }.kml` ), newXML, function( err, data ) {
-                    if (err) {
-                        reject(false);
-                        console.log( err );
-                        process.exit();
-                    } else {
-
-                        if( FILES.length === 0 ) {
-                            newXML = '';
-                            process.stdout.write(`... saving ...\r`);
-                        } else {
-                            // FILES2.shift();
-                            // let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
-                            // percentBar( ' resolved ', FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
-                        }
-
-                        resolve();
-                    }
-                })
-            })
-            .catch( err => {
-                console.error( err );
-                reject(false);
-            });
-
             dupes.push( NAME );
+
+            const F = path.join( DIST, `/${ NAME }.kml` );
+
+            fse.ensureFileSync( F );
+            fse.writeFileSync( path.join( DIST, `/${ NAME }.kml` ), newXML );
+            // if( FILES.length === 1 ) {
+            //     let p = Math.round( currentKey / total * 100 );
+            //     percentBar( ' resolved', currentKey, total, p, currentKey );
+            // } 
+            // else if ( FILES.length > 1 ) {
+            // }
+
+            resolve();
 
         } else {
             // console.log( 'dupe!', NAME );
             // BLACK HOLE
         }
 
+        if( FILES.legnth > 1 ) {
+            console.log( total === currentKey );
+            // if( total === currentKey ) {
+
+            //     FILES2.shift();
+            //     let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
+            //     percentBar( ' resolved ', FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
+
+            // }
+
+        }
+
+
     });
+
+
 
 };
 

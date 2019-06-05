@@ -98,7 +98,7 @@ let streamFile = ( FILE, idx ) => new Promise( ( resolve, reject ) => {
         );
 
         dataArray[idx] = {data:''};
-        process.stdout.write(`...  reading  ...\r`);
+        process.stdout.write(`...  reading ...\r`);
 
         decodedXMLStream.on( 'data', ( xmlStr ) => {
             dataArray[idx].data += xmlStr.replace(/\r?\n|\r/g, '');
@@ -106,14 +106,11 @@ let streamFile = ( FILE, idx ) => new Promise( ( resolve, reject ) => {
 
         decodedXMLStream.on( 'end', () => {
             processFile( FILE, idx, dataArray[idx].data, resolve, reject );
-            // console.log('decoded');
         });
 
 });
 
 let processFile = ( FILE, idx, data, resolve, reject ) => {
-
-    // process.stdout.write(`... converting ...\r`);
 
     let xml = data;
     let result = JSON.parse( convert.xml2json( xml, { compact: true, spaces: 4 } ) );
@@ -136,8 +133,7 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
     }
 
     let total = Object.keys(places).length;
-    let currentKey = 0;
-
+    let currentKey = 1;
 
     Object.keys( places ).forEach( ( place, placeIndex ) => {
 
@@ -195,15 +191,6 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
         newResult = '';
 
-        // if( FILES.length === 1 ) {
-        //     let p = Math.round( currentKey / total * 100 );
-        //     percentBar( ' resolved', currentKey, total, p, currentKey );
-        // } else {
-        //     process.stdout.write(`... saving ...\r`);
-        // }
-
-        currentKey +=1;
-
         if ( !dupes.includes( NAME ) ) {
 
             dupes.push( NAME );
@@ -212,36 +199,29 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
             fse.ensureFileSync( F );
             fse.writeFileSync( path.join( DIST, `/${ NAME }.kml` ), newXML );
-            // if( FILES.length === 1 ) {
-            //     let p = Math.round( currentKey / total * 100 );
-            //     percentBar( ' resolved', currentKey, total, p, currentKey );
-            // } 
-            // else if ( FILES.length > 1 ) {
-            // }
 
-            resolve();
+            if( FILES.length > 1 ) {
+                process.stdout.write(`... ${currentKey}/${total} ...\r`);
+                if ( total === currentKey ) { // is multiple files
+                    FILES2.shift();
+                    let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
+                    percentBar( `resolved`, FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
+                    resolve();
+                }
+            } else {
+                let p = Math.round( currentKey / total * 100 );
+                percentBar( 'resolved', currentKey, total, p, currentKey );
+                resolve();
+            }
 
         } else {
             // console.log( 'dupe!', NAME );
             // BLACK HOLE
         }
 
-        if( FILES.legnth > 1 ) {
-            console.log( total === currentKey );
-            // if( total === currentKey ) {
-
-            //     FILES2.shift();
-            //     let p = Math.abs( Math.ceil( ( FILES2.length / FILES.length % FILES.length * 100 ) - 100 ) );
-            //     percentBar( ' resolved ', FILES2.length, FILES.length, p, Math.abs( FILES.length - FILES2.length ) );
-
-            // }
-
-        }
-
+        currentKey +=1;
 
     });
-
-
 
 };
 

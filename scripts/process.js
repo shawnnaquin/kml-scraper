@@ -157,7 +157,7 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
         }
 
-        const NAME = normalizedStateName ? `${normalizedStateName}_${normalizedName}` : `${normalizedName}`;
+        const NAME = normalizedStateName && type !== 'state' ? `${normalizedStateName}_${normalizedName}` : `${normalizedName}`;
 
         let newResult = result;
 

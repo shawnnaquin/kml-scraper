@@ -18,11 +18,12 @@ const statefips = require( `../${SRCFOLDER}/${SRCFIPS}` );
 const stateabbrev = require( `../${SRCFOLDER}/${SRCABBREV}` );
 
 const SRCCOUNTY = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCCOUNTY}`);
+const SRCSTATE = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCSTATE}`);
 const SRCZCTA = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCZCTA}`);
 const SRCCITYFOLDER = path.resolve( __dirname, `../${SRCFOLDER}/${CONFIG.SRCCITYFOLDER}` );
 const nameParser = require( path.resolve( __dirname, `../utilities/scriptutils.js`) ).nameparser;
 
-let type = ['--county','--zip', '--city', '--neighborhood']
+let type = ['--county','--zip', '--city', '--neighborhood', '--state']
     .filter( (el) => { if( process.argv.includes(el) ) return el; }  )[0].replace('--','');
 
 const SRCNEIGHBORHOODFOLDER = path.resolve( __dirname, `../${DISTFOLDER}/${DISTTEMPFOLODER}/${type}` );
@@ -227,9 +228,10 @@ let processFile = ( FILE, idx, data, resolve, reject ) => {
 
 process.stdout.write( `... spooling ...\r` );
 
-if ( type === 'county' || type === 'zip' ) {
+if ( type === 'county' || type === 'state' || type === 'zip' ) {
 
-    FILES.push( type === 'county' ? SRCCOUNTY : SRCZCTA );
+    FILES.push( type === 'county' ? SRCCOUNTY : type === 'state' ? SRCSTATE : SRCZCTA );
+
     start();
 
 } else if ( type === 'city' ) {

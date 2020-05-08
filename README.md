@@ -288,8 +288,10 @@ ___
 ____
 
 
+## THIS SECTION IS OUTDATED, EVERYTHINGS DOCKER-IFIED and handled in the container, 
+keeping the below info for the case I need to install on a host machine for whatever reason.
 
-### Required CLI tools ( Mac/Linux ):
+### (non) Required CLI tools ( Mac/Linux ):
 `GDAL2`: `ogr2ogr`
 https://varunpant.com/posts/gdal-2-on-mac-with-homebrew
 
@@ -324,6 +326,7 @@ brew install geos
 pip install shapely
 ```
 ____
+## end above section--
 
 #### Testing KML/XML Files
 

@@ -1,0 +1,1 @@
+{"type":"Topology","transform":{"scale":[1,1],"translate":[0,0]},"objects":{"nielsen_dma":{"type":"GeometryCollection","geometries":[{"type":"Polygon","id":500,"arcs":[[0]],"properties":{"dma":500,"dma1":"Portland-Auburn, ME","name":"dma:"}}]}},"arcs":[[[0,0],[1,0],[0,1],[-1,-1]]]}

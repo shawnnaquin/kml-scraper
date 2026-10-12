@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="ZillowNeighborhoods_VT" id="ZillowNeighborhoods_VT">
+	<SimpleField name="State" type="string"></SimpleField>
+	<SimpleField name="City" type="string"></SimpleField>
+</Schema>
+<Folder><name>ZillowNeighborhoods_VT</name>
+  <Placemark id="ZillowNeighborhoods_VT.1">
+	<name>Graniteville-East Barre</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#ZillowNeighborhoods_VT">
+		<SimpleData name="State">vt</SimpleData>
+		<SimpleData name="City">Barre</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-72.43,44.15 -72.44,44.15 -72.44,44.16 -72.43,44.15</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder>
+</Document></kml>

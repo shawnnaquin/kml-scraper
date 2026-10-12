@@ -31,6 +31,8 @@
     "SRCGOOGLEGEO": "google-geotargets.csv",
     "SRCMSFTGEO": "msft-geolocations.csv",
     "SRCMETAGEO": "meta-geolocations.csv",
+    "SRCMETATARGETED": "meta-targeted.csv",
+    "SRCTTDGEO": "ttd-geosegments.csv",
     "SRCABBREV": "stateabbrev.json",
     "SRCFIPS": "statefips.json",
     "SRCZILLOWFOLDER": "neighborhoodshp",

@@ -12,3 +12,5 @@ src/google-geotargets.csv
 src/msft-geolocations.csv
 .cache/
 src/meta-geolocations.csv
+src/meta-targeted.csv
+src/ttd-geosegments.csv

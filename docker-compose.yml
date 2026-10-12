@@ -14,6 +14,7 @@ services:
       - MSADS_CUSTOMER_ID
       - MSADS_ACCOUNT_ID
       - META_ACCESS_TOKEN
+      - TTD_TOKEN
       - META_GRAPH_VERSION
       - HOST=0.0.0.0
     ports:

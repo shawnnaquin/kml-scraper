@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { parseCsv, toCsv } from '../lib/csv.js';
 import { loadConfig, ROOT } from '../lib/config.js';
-import { googleDmaId, nameVariants, loadGoogle, loadMsft, loadTtd, lookup, metaDmaKey, metaZipKey, ttdDmaId } from '../lib/geoids.js';
+import { googleDmaId, nameVariants, loadGoogle, loadMeta, loadMsft, loadTtd, lookup, metaDmaKey, metaZipKey, ttdDmaId } from '../lib/geoids.js';
 import { parseTtdSegment } from '../lib/steps/fetch.js';
 import { geoIds, INDEX_SCHEMA, settleClaims } from '../lib/steps/ids.js';
 
@@ -162,4 +162,45 @@ test('fetch ttd: US standard segment names become places', async () => {
   assert.equal(lookup(ttd, ['dma'], [['Dallas-Ft. Worth, TX', null]]).id, 'y2muwi8xz9', 'DMA names match without the comma');
   assert.equal(lookup(ttd, ['city'], [['Columbus', 'Ohio']]).id, 'c1');
   assert.equal(lookup(ttd, ['city'], [['Columbus', 'Georgia']]), null);
+});
+
+test('geoids: a town Google qualifies by county matches by name + state when it is the only one', async () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'kml-scraper-towns-'));
+  writeFileSync(path.join(dir, 'g.csv'), toCsv([
+    ['Criteria ID', 'Name', 'Canonical Name', 'Parent ID', 'Country Code', 'Target Type', 'Status'],
+    ['1023994', 'Somerset', 'Somerset,Perry County,Ohio,United States', '21168', 'US', 'City', 'Active'],
+    ['1', 'Squaw Valley', 'Squaw Valley,Placer,California,United States', '21137', 'US', 'City', 'Active'],
+    ['2', 'Squaw Valley', 'Squaw Valley,Fresno,California,United States', '21137', 'US', 'City', 'Active'],
+    ['3', 'Orange', 'Orange,Orange,California,United States', '21137', 'US', 'City', 'Active'],
+    ['4', 'Orange', 'Orange,California,United States', '21137', 'US', 'City', 'Active'],
+    ['5', 'Midtown', 'Midtown,Fulton County,Georgia,United States', '21142', 'US', 'Neighborhood', 'Active'],
+  ]));
+  const google = await loadGoogle(path.join(dir, 'g.csv'));
+  const somerset = lookup(google, ['City'], [['Somerset', 'Ohio']]);
+  assert.equal(somerset.id, '1023994');
+  assert.equal(somerset.via, 'state');
+  assert.equal(lookup(google, ['City'], [['Squaw Valley', 'California']]), null, 'two of them: neither');
+  assert.equal(lookup(google, ['City'], [['Orange', 'California']]).id, '4', 'the unqualified town wins');
+  assert.equal(lookup(google, ['Neighborhood'], [['Midtown', 'Georgia']]), null, 'neighborhoods stay city-only');
+});
+
+test('geoids: Meta regions by region name (DC either way), counties as medium_geo_area', async () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'kml-scraper-meta-'));
+  const header = ['key', 'name', 'type', 'region', 'country_code'];
+  writeFileSync(path.join(dir, 'fetched.csv'), toCsv([header, ['3851', 'Washington D. C.', 'region', 'Washington D. C.', 'US'], ['3890', 'Washington', 'region', 'Washington', 'US']]));
+  writeFileSync(path.join(dir, 'targeted.csv'), toCsv([
+    header,
+    ['3851', 'Washington', 'region', ' District of Columbia', 'US'],
+    ['2791346', 'Blanco County', 'medium_geo_area', 'Texas', 'US'],
+    ['2526105', 'Cedar Park', 'city', ' Texas', 'US'],
+  ]));
+  for (const files of [['fetched.csv'], ['targeted.csv'], ['fetched.csv', 'targeted.csv'], ['targeted.csv', 'fetched.csv']]) {
+    const meta = await loadMeta(...files.map((f) => path.join(dir, f)));
+    assert.equal(lookup(meta, ['region'], [['District of Columbia', null]])?.id, '3851', files.join('+'));
+    if (files.includes('fetched.csv')) assert.equal(lookup(meta, ['region'], [['Washington', null]]).id, '3890', 'the state keeps its key');
+  }
+  const meta = await loadMeta(path.join(dir, 'targeted.csv'));
+  assert.equal(lookup(meta, ['region'], [['Washington', null]]), null, 'DC is not Washington state');
+  assert.equal(lookup(meta, ['medium_geo_area'], [['Blanco County', 'Texas']]).id, '2791346');
+  assert.equal(lookup(meta, ['city'], [['Cedar Park', 'Texas']]).id, '2526105', 'padded region trimmed');
 });

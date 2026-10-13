@@ -1,4 +1,4 @@
-# How tfg uses this output (from the tfg side, updated 2026-10-12)
+# How tfg uses this output (from the tfg side, updated 2026-10-13)
 
 Written from `tfg`, branch `google-ads-geo-map`, against this repo's `modernize` branch.
 Fold into the README when you like; nothing here runs.
@@ -34,10 +34,25 @@ A place with none of `ids.google`, `ids.meta`, `ids.ttd_segment` is skipped with
 1. **`_index.json` stable**: done. It now carries `schema: 1`; the fields above are the contract (README "ids").
 2. **Neighborhoods**: `zillow` is back as the fallback, built after `neighborhood` and skipping Google ids Overture already has. Overture 557 + Zillow 1,657 = 2,214 Google-matched neighborhoods (was 684). Run `ids neighborhood` then `zillow`; `all` still leaves zillow out.
 3. **Trade Desk**: `fetch ttd` (needs `TTD_TOKEN`) pages TTD's GraphQL `geoSegmentsSearch` for the standard US segments (72,496: zip 41,285, city 30,950, DMA 210, state 51) into `src/ttd-geosegments.csv`; `ids` writes `ids.ttd_segment`. Matched: ZIP 99.6%, DMA 97.6%, city 55%, state 51/56. tfg outlines Trade Desk bid lists by it (`ttd:{segment}`) and names the place from the shape.
-4. **Meta cities and regions**: `fetch meta` ran (51 states). Meta city/neighborhood keys only come from what accounts target, so tfg's `geo:missing --meta-csv src/meta-targeted.csv` writes them in the same columns and `ids` reads both files. Still open: that file needs a production run of `geo:missing` (the fleet sample).
+4. **Meta cities and regions**: `fetch meta` ran (51 states). Meta city/neighborhood keys only come from what accounts target, so tfg's `geo:missing --meta-csv src/meta-targeted.csv` writes them in the same columns and `ids` reads both files. Done 2026-10-13 with the production fleet sample: Meta cities 148 of 156 targeted; DC matched (keyed by its region column).
+   - Done tfg side (3002befe02): `--meta-csv` writes Meta's `medium_geo_area` targets as county rows, regions trimmed; the next production sample picks up the 37 counties.
 5. **One id, several places**: neighborhoods match on Google's city (`Downtown,Sacramento,…`) first; then `settleClaims` keeps a city match, then the exact name, else clears the id for everyone. Claims land in `dist/temp/<type>/ambiguous.csv` (city 11, neighborhood 42 with 41 cleared, zillow 11).
 
 Left over: 37 counties share their Google id with the city of the same name (Virginia's independent cities, Carson City, a few Alaska boroughs); Google targets them as City, so tfg keeps the city shape and refuses the county's. Clearing `ids.google` on those counties would make that explicit. DC has no Meta region key (Meta calls it "Washington D. C."); Trade Desk cities match 55%, like Google's.
+
+## Fleet sample (2026-10-13, `geo:missing` on production, every place accounts target)
+
+Targeted places with a shape, before → after this round (weighted by targeting count in brackets):
+
+- Google: 2,087 → 2,088 of 2,139 (98.9%); towns Google qualifies by county (`Somerset,Perry County,Ohio`) now match by name + state when unique (+96 cities nationwide).
+- Meta: 3,568 → 3,718 of 5,096 (71.7% → 73.0%); 3,755 once the next sample carries the county rows tfg now writes.
+- Trade Desk: 5,577 of 7,238 (78.7%), unchanged: every uncovered standard segment is a ZIP with no area.
+- Of places that have an area at all, 99.6% are covered; left: 37 Meta counties (tfg rows above), 14 towns that aren't Census places (unincorporated; Google's `Pryor` is Census `Pryor Creek`).
+- Not drawable, by count: 2,949 US ZIPs that aren't ZCTAs (PO box / unique; Meta 1,275, Trade Desk 1,646, Google 28); 54 Meta business pins (`Place`); 15 Trade Desk custom segments; 13 foreign postal codes (German, Brazilian); countries; 1 Google Colloquial Area.
+- 3 Meta `COMSCORE_MARKET:` keys are DMAs under Meta's newer market ids; a DMA carries one `ids.meta` (`DMA:`), so tfg would map them by name or schema 2 would need a list.
+- Exclusions: 196 countries / foreign regions (incl. Puerto Rico, USVI) and the same ZIP / custom-segment classes; nothing drawable missing.
+- Point ZIPs could be drawn as the ZCTA they sit in from a ZIP-point list (GeoNames `US.zip`, ~1 MB), but that shows a PO box as a whole ZIP area; not done, your call.
+- Size: shapes the targeted keys need are 6,904 files, 24.9 MB (ZIP 18.3, state 2.0, DMA 1.9, city 1.6, county 1.0) of a 109,233-file, 206 MB build (12%); `geo:import --targeted` loads only those.
 
 ## Reference: Google ids
 

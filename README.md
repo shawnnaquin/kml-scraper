@@ -238,7 +238,7 @@ matches every simplified place to the location IDs each ad platform uses for it
 |----------|----------|-----|
 | `google_criteria_id`, `google_canonical_name` | Google Ads (all accounts) and Display & Video 360 | name + state lookup in `google-geotargets.csv`; DMAs are `200000 + DMA code` |
 | `msft_location_id`, `msft_display_name` | Microsoft Advertising | the Google ID via the file's "AdWords Location Id" column, then name + state |
-| `meta_location_key` | Meta (Facebook / Instagram) | DMAs `DMA:501`, ZIPs `US:43215`; states from `meta-geolocations.csv` (`fetch meta`), other places from `meta-targeted.csv` (same columns; tfg's `geo:missing --meta-csv` writes it from what accounts target) |
+| `meta_location_key` | Meta (Facebook / Instagram) | DMAs `DMA:501`, ZIPs `US:43215`; states from `meta-geolocations.csv` (`fetch meta`), cities, counties (`medium_geo_area`) and neighborhoods (`neighborhood`, `subcity`) from `meta-targeted.csv` (same columns; tfg's `geo:missing --meta-csv` writes it from what accounts target) |
 | `ttd_geo_id` | The Trade Desk | DMA code (`501`) and ZIP as-is |
 | `ttd_segment_id` | The Trade Desk | the `GeoSegmentId` bid lists target, from `ttd-geosegments.csv` (`fetch ttd`, needs `TTD_TOKEN`) by name + state |
 
@@ -247,7 +247,9 @@ matches every simplified place to the location IDs each ad platform uses for it
 - one ID, one place: when several places match the same ID, a city match (neighborhoods, from Google's `Canonical Name`) wins, then the exact name; a tie leaves the ID empty. The claims are in `dist/temp/<type>/ambiguous.csv`
 - `zillow` skips Google IDs the `neighborhood` build already has, so run `ids neighborhood` before `zillow`; together they're the neighborhood set
 - places Google doesn't know end up in `dist/temp/<type>/unmatched-google.csv`
-- match rates on the 2025 / 2020 sources against Google: DMA 100%, ZIP 96%, county 97% (misses: Connecticut's new planning regions — Google still uses the old counties — a few Alaska boroughs, territories), state 51/56 (territories), city 53% (Google only targets ~21,600 US cities; 80% of those are matched — most of the rest are tiny towns and CDPs), neighborhood 557 of 23,166 Overture places plus 1,657 Zillow ones (see below), Trade Desk segments: ZIP 99.6%, DMA 97.6%, city 55%, state 51/56
+- a town Google qualifies by county or township (`Somerset,Perry County,Ohio`) also matches by name + state when it's the only one of that name in the state
+- match rates on the 2025 / 2020 sources against Google: DMA 100%, ZIP 96%, county 97% (misses: Connecticut's new planning regions — Google still uses the old counties — a few Alaska boroughs, territories), state 51/56 (territories), city 53% (17,220; Google only targets ~21,600 US cities; 80% of those are matched — most of the rest are tiny towns and CDPs), neighborhood 557 of 23,166 Overture places plus 1,657 Zillow ones (see below), Trade Desk segments: ZIP 99.6%, DMA 97.6%, city 55%, state 51/56
+- against the fleet sample (2026-10-13, every place tfg's accounts target): Google 97.6% of places covered, Meta 73%, Trade Desk 77%; nearly all the rest are ZIPs with no area (PO box / unique ZIPs, not ZCTAs: 2,949), then Meta business pins, countries and foreign postal codes; of drawable places 99.6% are covered (TFG_CONSUMER.md)
 
 #### pack — `pack`
 

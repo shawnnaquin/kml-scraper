@@ -18,11 +18,11 @@ The viewer's report joining is yours to keep; tfg won't build on it, and you don
 
 `geo:import` reads a `dist/simplified` folder, one type folder, or the `pack` zips (nested all-in-one too). From `_index.json` it uses only:
 
-- `type` (`zip`, `city`, `county`, `state`, `dma`, `neighborhood`)
+- `type` (`zip`, `zippoint`, `city`, `county`, `state`, `country`, `dma`, `neighborhood`); new types are not a schema change
 - `schema` (1 today; bump it if anything below changes)
 - per place: `file`, `name`, `label`, `ids.google` (criteria id, string or number), `ids.meta` (Meta key, e.g. `US:70130`, `DMA:622`), `ids.ttd_segment` (Trade Desk `GeoSegmentId`), `names.google`
 
-and from each place file, every feature's `Polygon`/`MultiPolygon` (`[lng, lat]`, rings closed), merged into one shape.
+and from each place file, every feature's `Polygon`/`MultiPolygon` (`[lng, lat]`, rings closed), merged into one shape; a `zippoint` file holds one `Point` (`[lng, lat]`) instead: draw a pin.
 A place with none of `ids.google`, `ids.meta`, `ids.ttd_segment` is skipped without reading its file. Please treat those fields as the stable interface; anything else can change freely. `ids.msft` and `ids.ttd` are unused today.
 `zillow` is imported as Neighborhood beside `neighborhood`; within one build an id a second place claims is refused (first wins), as a backstop to `ambiguous.csv`.
 
@@ -40,6 +40,13 @@ A place with none of `ids.google`, `ids.meta`, `ids.ttd_segment` is skipped with
 
 Left over: 37 counties share their Google id with the city of the same name (Virginia's independent cities, Carson City, a few Alaska boroughs); Google targets them as City, so tfg keeps the city shape and refuses the county's. Clearing `ids.google` on those counties would make that explicit. DC has no Meta region key (Meta calls it "Washington D. C."); Trade Desk cities match 55%, like Google's.
 
+## Asks: status 2026-10-13 (branch `zip-points-countries`)
+
+6. **ZIPs with no area**: new type `zippoint` (folder `dist/simplified/zippoint`, pack `zippoint-*.zip`): 7,337 US ZIPs the ZCTA build lacks, one `Point` each from GeoNames `US.zip` (CC BY 4.0), label `70502 (Lafayette, LA)`. Ids as `zip`: Google Postal Code (904), Meta `US:70502` (all), Trade Desk ZIP segment (7,025); never an id the `zip` build has.
+7. **Countries**: new type `country` (folder `dist/simplified/country`): 242 Natural Earth 1:50m outlines, 1.6 MB. `ids.google` = Google's `Country` row by ISO code (top-level Google `Region`s like Puerto Rico, Hong Kong count), 233; `ids.meta` = ISO alpha-2 (`US`), 237; `ids.ttd_segment` null.
+   - tfg: import both folders; draw `zippoint` as a pin (Point geometry), `country` as polygons like the others.
+   - Coverage of the fleet sample's keys, before → after: Google 2,172 → 2,400 of 2,431 (192 countries, 5 territories, 31 ZIPs); Meta 3,721 → 4,972 of 5,100 (1,250 ZIPs, `US`); Trade Desk 5,679 → 7,314 of 7,393 (1,635 ZIPs). Left: 54 Meta pins, 37 Meta counties (tfg rows), 79 Trade Desk custom segments, 25 Meta ZIPs GeoNames lacks, 15 foreign postal codes, 1 foreign region.
+
 ## Fleet sample (2026-10-13, `geo:missing` on production, every place accounts target)
 
 Targeted places with a shape, before → after this round (weighted by targeting count in brackets):
@@ -51,7 +58,7 @@ Targeted places with a shape, before → after this round (weighted by targeting
 - Not drawable, by count: 2,949 US ZIPs that aren't ZCTAs (PO box / unique; Meta 1,275, Trade Desk 1,646, Google 28); 54 Meta business pins (`Place`); 15 Trade Desk custom segments; 13 foreign postal codes (German, Brazilian); countries; 1 Google Colloquial Area.
 - 3 Meta `COMSCORE_MARKET:` keys are DMAs under Meta's newer market ids; a DMA carries one `ids.meta` (`DMA:`), so tfg would map them by name or schema 2 would need a list.
 - Exclusions: 196 countries / foreign regions (incl. Puerto Rico, USVI) and the same ZIP / custom-segment classes; nothing drawable missing.
-- Point ZIPs could be drawn as the ZCTA they sit in from a ZIP-point list (GeoNames `US.zip`, ~1 MB), but that shows a PO box as a whole ZIP area; not done, your call.
+- Point ZIPs and countries: done as `zippoint` / `country` (ask 6, 7).
 - Size: shapes the targeted keys need are 6,904 files, 24.9 MB (ZIP 18.3, state 2.0, DMA 1.9, city 1.6, county 1.0) of a 109,233-file, 206 MB build (12%); `geo:import --targeted` loads only those.
 
 ## Reference: Google ids

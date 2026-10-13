@@ -10,7 +10,7 @@ const HELP = `kml-scraper — boundary files in, one simplified geoJSON per plac
 usage: kml-scraper <command> [type]
 
 get the data
-  fetch [census|google|overture|msft|meta|all] [--force]
+  fetch [census|google|overture|geonames|naturalearth|msft|meta|ttd|all] [--force]
                          download sources into src/ (msft / meta need credentials, see README)
 
 pipelines
@@ -22,6 +22,7 @@ pipelines
 single steps (in the order you'd run them)
   shp <type>             SHP / zipped SHP / GPKG -> dist/temp/<type>/*.kml       (census, overture, zillow)
   dissolve dma           counties + old DMA map  -> dist/temp/dma/dma.json
+  points zippoint        GeoNames ZIPs with no ZCTA -> dist/simplified/zippoint/*.json (Point)
   topo dma               v1: topoJSON DMA map    -> dist/temp/dma/dma.json
   features dma           FeatureCollection       -> dist/complex/dma/*.json
   process <type>         big KML file(s)         -> dist/complex/<type>/*.kml

@@ -77,7 +77,7 @@ ___
 
 ```bash
 npm run fetch                 # everything that can be fetched without credentials
-npm run fetch -- census       # just one: census | google | overture | msft | meta
+npm run fetch -- census       # just one: census | google | overture | geonames | naturalearth | msft | meta | ttd
 npm run fetch -- all --force  # re-download even if the file is already there
 ```
 
@@ -85,6 +85,8 @@ npm run fetch -- all --force  # re-download even if the file is already there
 |--------|--------------|-------|
 | `census` | `cb_2025_us_{county,state,place}_500k.zip`, `cb_2020_us_zcta520_500k.zip` | — |
 | `google` | `google-geotargets.csv` — newest Google Ads geotargets (Criteria IDs) | — |
+| `geonames` | `geonames-US.zip` — GeoNames US postal codes, a point per ZIP (for `zippoint`, ~0.6 MB) | — |
+| `naturalearth` | `ne_50m_admin_0_countries.zip` — Natural Earth 1:50m countries (for `country`, ~0.8 MB) | — |
 | `overture` | `overture-neighborhoods.gpkg` — US neighborhoods + macrohoods from the latest Overture release (via DuckDB, ~1 min) | — |
 | `msft` | `msft-geolocations.csv` — Microsoft Advertising geographic locations | `MSADS_DEVELOPER_TOKEN`, `MSADS_ACCESS_TOKEN` (+ optional `MSADS_CUSTOMER_ID`, `MSADS_ACCOUNT_ID`) |
 | `meta` | `meta-geolocations.csv` — Meta region (state) keys | `META_ACCESS_TOKEN` (any token with `ads_read`; `META_GRAPH_VERSION` defaults to `v23.0`) |
@@ -115,6 +117,8 @@ package.json#config
     "SRCSTATE": "cb_2025_us_state_500k.zip",
     "SRCCITY": "cb_2025_us_place_500k.zip",
     "SRCZCTA": "cb_2020_us_zcta520_500k.zip",
+    "SRCZIPPOINT": "geonames-US.zip",     // GeoNames US postal codes (zippoint)
+    "SRCCOUNTRY": "ne_50m_admin_0_countries.zip", // Natural Earth; the scale in the name picks the URL
     "SRCNEIGHBORHOOD": "overture-neighborhoods.gpkg",
     "OVERTURERELEASE": "latest",          // or a release like "2026-09-23.1"
     "SRCDMA": "nielsentopo.json",         // old DMA map, only used to assign counties to DMAs
@@ -165,11 +169,13 @@ The `type` argument (`dma`, `county`, …) is the same through every step for a 
 | `zip` | `src/cb_2020_us_zcta520_500k.zip` (Census ZCTAs) | `shp` → `process` → `simplify` → `ids` |
 | `county` | `src/cb_2025_us_county_500k.zip` | `shp` → `process` → `simplify` → `ids` |
 | `state` | `src/cb_2025_us_state_500k.zip` | `shp` → `process` → `simplify` → `ids` |
+| `zippoint` | `src/geonames-US.zip` (GeoNames), every ZIP the `zip` build has no ZCTA for (PO box / unique ZIPs); run after `zip` | `points` → `ids` |
+| `country` | `src/ne_50m_admin_0_countries.zip` (Natural Earth admin 0, simplified at 0.01°, 4 decimals) | `shp` → `process` → `simplify` → `ids` |
 | `zillow` | `src/neighborhoodshp/*.shp` (legacy Zillow; only runs when asked for by name) | `shp` → `process` → `simplify` → `ids` |
 
 Point a type at a KML source (like v1's) and it skips `shp`, exactly as before.
 
-File names are `<state>_<place>` (e.g. `ohio_columbus`, `vermont_east_barre`), just `<place>` for `state` and `zip`, `<state>_<city>_<neighborhood>` for `neighborhood`, and the DMA name for `dma` (`portland-auburn_me`). Names go through the same slugger as v1: lower-case, accents stripped, spaces → `_`, `/` → `-`, and `' " ( ) , &` removed.
+File names are `<state>_<place>` (e.g. `ohio_columbus`, `vermont_east_barre`), just `<place>` for `state`, `zip`, `zippoint` and `country`, `<state>_<city>_<neighborhood>` for `neighborhood`, and the DMA name for `dma` (`portland-auburn_me`). Names go through the same slugger as v1: lower-case, accents stripped, spaces → `_`, `/` → `-`, and `' " ( ) , &` removed.
 
 ___
 ### Script Descriptions
@@ -211,6 +217,13 @@ converts a single `geoJSON` `FeatureCollection` file to individual files, one `F
 - each output is a `FeatureCollection` holding exactly one `Feature`
 - DMA names come from `dmainfo.json` (`dma1`), its record (rank, TV homes, …) is merged into the feature's properties, and the enriched copy goes to `dist/temp/dma/dmainfo.json`
 
+#### points — `points:zippoint`
+
+GeoNames US postal codes → one `FeatureCollection` with one **Point** per ZIP in `dist/simplified/zippoint/<zip>.json`
+
+- only ZIPs with no file in `dist/simplified/zip` (so a zippoint never shares an id with a ZCTA); military APO / FPO ZIPs (no state) are dropped
+- label `70502 (Lafayette, LA)`: GeoNames place name + state; attributes (`PLACE`, `STUSPS`, `COUNTY`, `ACCURACY`) go to `dist/temp/zippoint/attributes.json` for `ids`
+
 #### process — `process:(county|zip|city|state|neighborhood)`
 
 converts a single big `KML` file or a folder of them (each containing multiple features) into individual, lossless `KML` files. Each output file contains exactly one feature or place.
@@ -240,16 +253,20 @@ matches every simplified place to the location IDs each ad platform uses for it
 | `msft_location_id`, `msft_display_name` | Microsoft Advertising | the Google ID via the file's "AdWords Location Id" column, then name + state |
 | `meta_location_key` | Meta (Facebook / Instagram) | DMAs `DMA:501`, ZIPs `US:43215`; states from `meta-geolocations.csv` (`fetch meta`), cities, counties (`medium_geo_area`) and neighborhoods (`neighborhood`, `subcity`) from `meta-targeted.csv` (same columns; tfg's `geo:missing --meta-csv` writes it from what accounts target) |
 | `ttd_geo_id` | The Trade Desk | DMA code (`501`) and ZIP as-is |
+| (country) | Google / Meta | Google's `Country` row by ISO code (`Country Code`; a top-level Google `Region` like Puerto Rico, Hong Kong counts), Meta's key is the ISO code (`US`); a code Natural Earth only lends (`ISO_A2_EH`: Ashmore and Cartier → AU) loses to the country carrying it |
 | `ttd_segment_id` | The Trade Desk | the `GeoSegmentId` bid lists target, from `ttd-geosegments.csv` (`fetch ttd`, needs `TTD_TOKEN`) by name + state |
 
 - the Census / Overture attributes (`GEOID`, `NAMELSAD`, `STUSPS`, …) are added too
 - writes `dist/simplified/<type>/_index.json`: every place's IDs and match keys — what the viewer joins reports against, and what tfg's `geo:import` reads (`schema`, `type`, per place `file`, `name`, `label`, `ids.google`, `ids.meta`, `ids.ttd_segment`, `names.google`; keep those stable, bump `schema` if they change)
 - one ID, one place: when several places match the same ID, a city match (neighborhoods, from Google's `Canonical Name`) wins, then the exact name; a tie leaves the ID empty. The claims are in `dist/temp/<type>/ambiguous.csv`
 - `zillow` skips Google IDs the `neighborhood` build already has, so run `ids neighborhood` before `zillow`; together they're the neighborhood set
+- `zippoint` ids are the `zip` type's (Postal Code criteria id, `US:<zip>`, TTD ZIP segment) and skip any id the `zip` build holds
+- adding a type (`zippoint`, `country`) is not a schema change; `zippoint` places are `Point` geometry
 - places Google doesn't know end up in `dist/temp/<type>/unmatched-google.csv`
 - a town Google qualifies by county or township (`Somerset,Perry County,Ohio`) also matches by name + state when it's the only one of that name in the state
 - match rates on the 2025 / 2020 sources against Google: DMA 100%, ZIP 96%, county 97% (misses: Connecticut's new planning regions — Google still uses the old counties — a few Alaska boroughs, territories), state 51/56 (territories), city 53% (17,220; Google only targets ~21,600 US cities; 80% of those are matched — most of the rest are tiny towns and CDPs), neighborhood 557 of 23,166 Overture places plus 1,657 Zillow ones (see below), Trade Desk segments: ZIP 99.6%, DMA 97.6%, city 55%, state 51/56
-- against the fleet sample (2026-10-13, every place tfg's accounts target): Google 97.6% of places covered, Meta 73%, Trade Desk 77%; nearly all the rest are ZIPs with no area (PO box / unique ZIPs, not ZCTAs: 2,949), then Meta business pins, countries and foreign postal codes; of drawable places 99.6% are covered (TFG_CONSUMER.md)
+- match rates, new types: `zippoint` 7,337 ZIPs (Google 904, Meta 7,337, Trade Desk segment 7,025), `country` 242 (Google 233, Meta 237)
+- against the fleet sample (2026-10-13, every place tfg's accounts target), with `zippoint` + `country`: Google 98.7% of places covered, Meta 97.5%, Trade Desk 98.9%; left: Meta business pins, Meta counties (tfg rows pending), Trade Desk custom segments, ZIPs GeoNames lacks, foreign postal codes (TFG_CONSUMER.md)
 
 #### pack — `pack`
 
@@ -333,7 +350,7 @@ npm run ids:neighborhood
 ___
 ### Other `npm run` commands
 
-- `npm run all`: do all the things, set-it-and-forget-it (warning → every type → bump version → pack)
+- `npm run all`: do all the things (`zippoint` and `country` included), set-it-and-forget-it (warning → every type → bump version → pack)
 - `npm run all:complex`: do all the things, but don't simplify
 - `npm run all:simplify`: simplify + ids for everything already in `dist/complex`
 - `npm run fetch`: download sources, see above
@@ -395,5 +412,11 @@ drop in some JSON!
 ```
 
 ( QGIS is a good visual tool if you prefer )
+
+___
+#### Credits
+
+- ZIP points (`zippoint`): [GeoNames](https://www.geonames.org/) postal codes, CC BY 4.0
+- countries (`country`): [Natural Earth](https://www.naturalearthdata.com/), public domain
 
 thanks---Shawn let me know if this is missing something!

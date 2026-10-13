@@ -49,6 +49,24 @@ https://raw.githubusercontent.com/simzou/nielsen-dma/master/tv.json
 
 ___
 
+### ZIP points — GeoNames — `SRCZIPPOINT`
+```
+geonames-US.zip                  US.txt: postal code, place, state, county, lat/lng (one point per ZIP)
+```
+
+`npm run fetch -- geonames` (https://download.geonames.org/export/zip/US.zip). CC BY 4.0: credit "GeoNames" wherever you show it. `zippoint` draws the ZIPs the ZCTA file doesn't have.
+
+___
+
+### Countries — Natural Earth — `SRCCOUNTRY`
+```
+ne_50m_admin_0_countries.zip     admin 0 countries, 1:50m (242; 1:110m has 177 and drops microstates Google targets)
+```
+
+`npm run fetch -- naturalearth` (https://naciscdn.org/naturalearth/50m/cultural/). Public domain. Point the key at `ne_110m_…` or `ne_10m_…` for another scale.
+
+___
+
 ### Ad-platform locations — `SRCGOOGLEGEO`, `SRCMSFTGEO`, `SRCMETAGEO`
 ```
 google-geotargets.csv            Google Ads geotargets (Criteria ID, Canonical Name, Target Type, Status)

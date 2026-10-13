@@ -47,6 +47,11 @@ Left over: 37 counties share their Google id with the city of the same name (Vir
    - tfg: import both folders; draw `zippoint` as a pin (Point geometry), `country` as polygons like the others.
    - Coverage of the fleet sample's keys, before → after: Google 2,172 → 2,400 of 2,431 (192 countries, 5 territories, 31 ZIPs); Meta 3,721 → 4,972 of 5,100 (1,250 ZIPs, `US`); Trade Desk 5,679 → 7,314 of 7,393 (1,635 ZIPs). Left: 54 Meta pins, 37 Meta counties (tfg rows), 79 Trade Desk custom segments, 25 Meta ZIPs GeoNames lacks, 15 foreign postal codes, 1 foreign region.
 
+## Asks: status 2026-10-13 (branch `ttd-complete-segments`)
+
+8. **Trade Desk "custom" segments**: all 77 that resolve are standard (45 city, 31 ZIP, 1 country); a client's bid list name made them look custom. `fetch ttd` paged unsorted and lost a third of the cities (24,382 unique of 30,951); it now sorts by id, retries TTD's occasional server error, and refuses a short or repeated list. Countries are fetched too (236), matched by name: 218 of 242.
+   - Trade Desk cities 55% → 70.8%; of the fleet's 77, 32 now have a shape. Left: 14 postal town names that aren't Census places (Cypress TX, New Caney, Greenwell Springs), 31 PO-box ZIPs GeoNames lacks (70140, 70595, CA 9xxxx).
+
 ## Fleet sample (2026-10-13, `geo:missing` on production, every place accounts target)
 
 Targeted places with a shape, before → after this round (weighted by targeting count in brackets):

@@ -149,6 +149,8 @@ test('fetch ttd: US standard segment names become places', async () => {
   assert.equal(parseTtdSegment('zip', 'Brazil - 15162'), null);
   assert.deepEqual(parseTtdSegment('dma', 'United States - Nielsen DMA - Dallas-Ft. Worth TX'), { name: 'Dallas-Ft. Worth TX', region: '' });
   assert.deepEqual(parseTtdSegment('city', 'United States - Louisiana - New Orleans'), { name: 'New Orleans', region: 'Louisiana' });
+  assert.deepEqual(parseTtdSegment('country', 'United States'), { name: 'United States', region: '' });
+  assert.equal(parseTtdSegment('country', 'United States - 27614'), null);
 
   const dir = mkdtempSync(path.join(tmpdir(), 'kml-scraper-ttd-'));
   writeFileSync(path.join(dir, 't.csv'), toCsv([
@@ -156,12 +158,14 @@ test('fetch ttd: US standard segment names become places', async () => {
     ['g12ik2flrj', 'zip', '27614', '', 'United States - 27614'],
     ['y2muwi8xz9', 'dma', 'Dallas-Ft. Worth TX', '', 'United States - Nielsen DMA - Dallas-Ft. Worth TX'],
     ['c1', 'city', 'Columbus', 'Ohio', 'United States - Ohio - Columbus'],
+    ['bpywp4wtwk', 'country', 'United States', '', 'United States'],
   ]));
   const ttd = await loadTtd(path.join(dir, 't.csv'));
   assert.equal(lookup(ttd, ['zip'], [['27614', null]]).id, 'g12ik2flrj');
   assert.equal(lookup(ttd, ['dma'], [['Dallas-Ft. Worth, TX', null]]).id, 'y2muwi8xz9', 'DMA names match without the comma');
   assert.equal(lookup(ttd, ['city'], [['Columbus', 'Ohio']]).id, 'c1');
   assert.equal(lookup(ttd, ['city'], [['Columbus', 'Georgia']]), null);
+  assert.equal(lookup(ttd, ['country'], [['United States', null]]).id, 'bpywp4wtwk');
 });
 
 test('geoids: a town Google qualifies by county matches by name + state when it is the only one', async () => {

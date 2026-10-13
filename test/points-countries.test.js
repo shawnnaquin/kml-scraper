@@ -8,9 +8,11 @@ import yazl from 'yazl';
 import { toCsv } from '../lib/csv.js';
 import { loadConfig, ROOT } from '../lib/config.js';
 import { countryIso, loadGoogle, metaCountryKey } from '../lib/geoids.js';
-import { parseGeonamesPostal } from '../lib/geonames.js';
+import { parseGeonamesPostal, parseZipcodes } from '../lib/geonames.js';
 import { runStep } from '../lib/pipeline.js';
-import { zipPointsWithoutZcta } from '../lib/steps/points.js';
+import { withFallback, zipPointsWithoutZcta } from '../lib/steps/points.js';
+import { postalTowns } from '../lib/steps/postaltown.js';
+import { matchKey } from '../lib/naming.js';
 import { geoIds } from '../lib/steps/ids.js';
 
 const GEONAMES = [
@@ -75,6 +77,38 @@ test('geonames: US postal rows parse; no-state military ZIPs and pointless rows 
 test('zippoint: only ZIPs with no ZCTA', () => {
   const rows = zipPointsWithoutZcta(parseGeonamesPostal(GEONAMES), new Set(['70130', '96860']));
   assert.deepEqual(rows.map((r) => r.zip), ['70469', '70502']);
+});
+
+test('zipcodes: fills the ZIPs GeoNames lacks; military and pointless rows dropped; GeoNames wins a tie', () => {
+  const extra = parseZipcodes([
+    { zip_code: '70140', zip_code_type: 'STANDARD', city: 'New Orleans', state: 'LA', county: 'Orleans Parish', lat: '29.95', long: '-90.07' },
+    { zip_code: '70130', zip_code_type: 'STANDARD', city: 'Elsewhere', state: 'LA', lat: '1', long: '1' },
+    { zip_code: '09001', zip_code_type: 'MILITARY', city: 'APO', state: 'AE', lat: '1', long: '1' },
+    { zip_code: '32574', zip_code_type: 'PO BOX', city: 'Nowhere', state: 'FL', lat: '', long: '' },
+  ]);
+  assert.deepEqual([...extra.keys()], ['70140', '70130']);
+  assert.equal(extra.get('70140').source, 'zipcodes');
+
+  const geonames = parseGeonamesPostal(GEONAMES);
+  const merged = withFallback(geonames, extra);
+  assert.equal(merged.get('70130').place, 'New Orleans', 'GeoNames first');
+  assert.equal(merged.get('70140').place, 'New Orleans');
+});
+
+test('postaltown: mail towns that are not Census places, with their ZCTA ZIPs', () => {
+  const row = (zip, place, stateCode) => [zip, { zip, place, stateCode }];
+  const postal = new Map([
+    row('77429', 'Cypress', 'TX'), row('77433', 'Cypress', 'TX'), row('77410', 'Cypress', 'TX'),
+    row('70130', 'New Orleans', 'LA'), row('70570', 'Saint Landry', 'LA'), row('77001', 'Houston', 'TX'),
+  ]);
+  const zctas = new Set(['77429', '77433', '70130', '70570', '77001']);
+  // Census has New Orleans and Houston; "St. Landry" would hide Saint Landry too
+  const census = new Set([matchKey('New Orleans', 'LA'), matchKey('Houston', 'TX')]);
+  assert.deepEqual(postalTowns(postal, zctas, census), [
+    { place: 'Saint Landry', stateCode: 'LA', zips: ['70570'] },
+    { place: 'Cypress', stateCode: 'TX', zips: ['77429', '77433'] },
+  ]);
+  assert.deepEqual(postalTowns(postal, zctas, new Set([matchKey('St. Landry', 'LA')])).map((t) => t.place), ['New Orleans', 'Cypress', 'Houston'], 'by state, then town');
 });
 
 test('zippoint: points + ids write a Point per non-ZCTA ZIP with Google / Meta / Trade Desk ids', async () => {

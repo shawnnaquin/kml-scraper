@@ -24,6 +24,7 @@
     "SRCCITY": "cb_2025_us_place_500k.zip",
     "SRCZCTA": "cb_2020_us_zcta520_500k.zip",
     "SRCZIPPOINT": "geonames-US.zip",
+    "SRCZIPCODES": "zipcodes-us.json",
     "SRCCOUNTRY": "ne_50m_admin_0_countries.zip",
     "SRCNEIGHBORHOOD": "overture-neighborhoods.gpkg",
     "OVERTURERELEASE": "latest",

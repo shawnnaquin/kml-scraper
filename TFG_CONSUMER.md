@@ -52,6 +52,10 @@ Left over: 37 counties share their Google id with the city of the same name (Vir
 8. **Trade Desk "custom" segments**: all 77 that resolve are standard (45 city, 31 ZIP, 1 country); a client's bid list name made them look custom. `fetch ttd` paged unsorted and lost a third of the cities (24,382 unique of 30,951); it now sorts by id, retries TTD's occasional server error, and refuses a short or repeated list. Countries are fetched too (236), matched by name: 218 of 242.
    - Trade Desk cities 55% → 70.8%; of the fleet's 77, 32 now have a shape. Left: 14 postal town names that aren't Census places (Cypress TX, New Caney, Greenwell Springs), 31 PO-box ZIPs GeoNames lacks (70140, 70595, CA 9xxxx).
 
+9. **ZIPs GeoNames lacks**: `fetch zipcodes` (the `zipcodes` package's USPS list, MIT, 2025-02) fills `zippoint`: 7,337 → 8,159 points; 26 of the fleet's 31 Trade Desk and 24 of Meta's 25 now have one. Left: 32574, 32598, 91186, 90097, 91187, 00116 (retired; no source has them).
+10. **Postal towns**: new type `postaltown` (folder `dist/simplified/postaltown`, 6,332 towns, 11.6 MB): USPS town names that aren't Census places, as their ZIPs' ZCTAs unioned. Ids as a city (Google 1,577, Trade Desk 6,175, Meta where targeted), never one `city` holds. All 14 of the fleet's unmatched Trade Desk towns (Cypress TX, New Caney, Greenwell Springs) now have a shape.
+   - tfg: import it as City.
+
 ## Fleet sample (2026-10-13, `geo:missing` on production, every place accounts target)
 
 Targeted places with a shape, before → after this round (weighted by targeting count in brackets):

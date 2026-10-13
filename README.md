@@ -86,6 +86,7 @@ npm run fetch -- all --force  # re-download even if the file is already there
 | `census` | `cb_2025_us_{county,state,place}_500k.zip`, `cb_2020_us_zcta520_500k.zip` | — |
 | `google` | `google-geotargets.csv` — newest Google Ads geotargets (Criteria IDs) | — |
 | `geonames` | `geonames-US.zip` — GeoNames US postal codes, a point per ZIP (for `zippoint`, ~0.6 MB) | — |
+| `zipcodes` | `zipcodes-us.json` — the `zipcodes` Python package's USPS ZIP list (MIT, data of 2025-02-16; pinned wheel, checked by hash): the PO box / unique ZIPs GeoNames lacks, for `zippoint` and `postaltown` | — |
 | `naturalearth` | `ne_50m_admin_0_countries.zip` — Natural Earth 1:50m countries (for `country`, ~0.8 MB) | — |
 | `overture` | `overture-neighborhoods.gpkg` — US neighborhoods + macrohoods from the latest Overture release (via DuckDB, ~1 min) | — |
 | `msft` | `msft-geolocations.csv` — Microsoft Advertising geographic locations | `MSADS_DEVELOPER_TOKEN`, `MSADS_ACCESS_TOKEN` (+ optional `MSADS_CUSTOMER_ID`, `MSADS_ACCOUNT_ID`) |
@@ -118,6 +119,7 @@ package.json#config
     "SRCCITY": "cb_2025_us_place_500k.zip",
     "SRCZCTA": "cb_2020_us_zcta520_500k.zip",
     "SRCZIPPOINT": "geonames-US.zip",     // GeoNames US postal codes (zippoint)
+    "SRCZIPCODES": "zipcodes-us.json",    // zipcodes package ZIPs, GeoNames' gaps (zippoint, postaltown)
     "SRCCOUNTRY": "ne_50m_admin_0_countries.zip", // Natural Earth; the scale in the name picks the URL
     "SRCNEIGHBORHOOD": "overture-neighborhoods.gpkg",
     "OVERTURERELEASE": "latest",          // or a release like "2026-09-23.1"
@@ -169,7 +171,8 @@ The `type` argument (`dma`, `county`, …) is the same through every step for a 
 | `zip` | `src/cb_2020_us_zcta520_500k.zip` (Census ZCTAs) | `shp` → `process` → `simplify` → `ids` |
 | `county` | `src/cb_2025_us_county_500k.zip` | `shp` → `process` → `simplify` → `ids` |
 | `state` | `src/cb_2025_us_state_500k.zip` | `shp` → `process` → `simplify` → `ids` |
-| `zippoint` | `src/geonames-US.zip` (GeoNames), every ZIP the `zip` build has no ZCTA for (PO box / unique ZIPs); run after `zip` | `points` → `ids` |
+| `zippoint` | `src/geonames-US.zip` (GeoNames), then `src/zipcodes-us.json`: every ZIP the `zip` build has no ZCTA for (PO box / unique ZIPs); run after `zip` | `points` → `ids` |
+| `postaltown` | USPS mail towns that aren't Census places (`Cypress, TX`): the ZCTAs of the ZIPs GeoNames / zipcodes name them for, unioned; matched like a city, never an id `city` has; run after `city` and `zip` | `dissolve` → `features` → `simplify` → `ids` |
 | `country` | `src/ne_50m_admin_0_countries.zip` (Natural Earth admin 0, simplified at 0.01°, 4 decimals) | `shp` → `process` → `simplify` → `ids` |
 | `zillow` | `src/neighborhoodshp/*.shp` (legacy Zillow; only runs when asked for by name) | `shp` → `process` → `simplify` → `ids` |
 
@@ -416,7 +419,7 @@ drop in some JSON!
 ___
 #### Credits
 
-- ZIP points (`zippoint`): [GeoNames](https://www.geonames.org/) postal codes, CC BY 4.0
+- ZIP points (`zippoint`): [GeoNames](https://www.geonames.org/) postal codes, CC BY 4.0; gaps from the [`zipcodes`](https://pypi.org/project/zipcodes/) package, MIT
 - countries (`country`): [Natural Earth](https://www.naturalearthdata.com/), public domain
 
 thanks---Shawn let me know if this is missing something!

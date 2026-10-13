@@ -14,3 +14,6 @@ src/msft-geolocations.csv
 src/meta-geolocations.csv
 src/meta-targeted.csv
 src/ttd-geosegments.csv
+src/zipcodes-us.json
+src/*.whl
+src/*.bz2

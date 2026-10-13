@@ -16,7 +16,7 @@ cb_2020_us_zcta520_500k.zip      (ZCTAs are only redrawn each decennial census)
 
 `npm run fetch -- census`, or by hand from https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html (`https://www2.census.gov/geo/tiger/GENZ<year>/shp/<file>`).
 
-The zipped shapefiles are read in place (GDAL `/vsizip/`). The old KML versions still work too: point a key at a `.kml` file (or `SRCCITY` at a folder of per-state KMLs) and that type skips the `shp` step, like v1.
+The zipped shapefiles are read in place (GDAL `/vsizip/`). A key can also point at a `.kml` file (or `SRCCITY` at a folder of KMLs); that type then skips the `shp` step.
 
 ___
 

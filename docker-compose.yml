@@ -1,22 +1,24 @@
-version: '3'
-
 services:
-  node-service:
-    image: node:latest
-    working_dir: /home/nodejs/app
-    container_name: kml-scraper-node
-    volumes:
-       - '.:/home/nodejs/app'
-    tty: true
-    stdin_open: true
-  gdal-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    working_dir: /data
-    container_name: kml-scraper-gdal
+  kml-scraper:
+    build: .
+    image: kml-scraper:latest
+    # write dist/ as your user, not root:  export UID GID=$(id -g)
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      - CONCURRENCY
+      - PRECISION
+      - GEOPRECISION
+      - MAPS_API_KEY
+      - MSADS_DEVELOPER_TOKEN
+      - MSADS_ACCESS_TOKEN
+      - MSADS_CUSTOMER_ID
+      - MSADS_ACCOUNT_ID
+      - META_ACCESS_TOKEN
+      - TTD_TOKEN
+      - META_GRAPH_VERSION
+      - HOST=0.0.0.0
+    ports:
+      - "${PORT:-8080}:8080"
     volumes:
       - .:/data
-    command: ["tail", "-f", "/dev/null"]
-    tty: true
-    stdin_open: true
+      - /data/node_modules

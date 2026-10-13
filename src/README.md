@@ -1,48 +1,81 @@
-ZCTA (zip) & County 
-```
-cb_2017_us_county_20m.kml
-cb_2017_us_zcta510_500k.kml
-```
+# Source data
 
-https://www.census.gov/geographies/mapping-files/time-series/geo/kml-cartographic-boundary-files.html
+Everything the pipeline reads lives here. File names are set in `package.json#config`. To use a different vintage (e.g. `cb_2024_…`), point the config key at it, or override it for one run: `SRCCOUNTY=cb_2024_us_county_500k.zip npm run county`.
+
+`npm run fetch` downloads everything that doesn't need credentials. Downloaded files are `.gitignore`d. The small lookup tables (`*.json`, `county-dma-overrides.csv`) are committed.
 
 ___
 
-nielson topo:
+### Census cartographic boundaries — `SRCCOUNTY`, `SRCSTATE`, `SRCCITY`, `SRCZCTA`
 ```
-nielsentopo.json
-dmainfo.json
+cb_2025_us_county_500k.zip
+cb_2025_us_state_500k.zip
+cb_2025_us_place_500k.zip        (cities, towns, villages, CDPs — the whole country in one file)
+cb_2020_us_zcta520_500k.zip      (ZCTAs are only redrawn each decennial census)
+```
+
+`npm run fetch -- census`, or by hand from https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html (`https://www2.census.gov/geo/tiger/GENZ<year>/shp/<file>`).
+
+The zipped shapefiles are read in place (GDAL `/vsizip/`). The old KML versions still work too: point a key at a `.kml` file (or `SRCCITY` at a folder of per-state KMLs) and that type skips the `shp` step, like v1.
+
+___
+
+### Neighborhoods — Overture Maps — `SRCNEIGHBORHOOD`, `OVERTURERELEASE`
+```
+overture-neighborhoods.gpkg
+overture-neighborhoods.gpkg.release      (which Overture release it came from)
+```
+
+`npm run fetch -- overture` queries the Overture `divisions/division_area` GeoParquet on S3 with DuckDB (no AWS account needed): US `neighborhood` and `macrohood` land areas, with `Name`, `City`, `County`, `State`, `Subtype`, `OvertureId`, `Wikidata`. `OVERTURERELEASE` is `latest` or a release like `2026-09-23.1`.
+
+https://docs.overturemaps.org/guides/divisions/ — data is ODbL; credit "© OpenStreetMap contributors, Overture Maps Foundation" wherever you show it.
+
+___
+
+### Nielsen DMAs — `SRCDMA`, `SRCDMAINFO`, `SRCCOUNTYDMA`
+```
+nielsentopo.json                 old DMA polygons (topoJSON) — only used to assign counties to DMAs
+dmainfo.json                     DMA code -> name (dma1), rank, TV homes, …
+county-dma-overrides.csv         geoid,dma,note — wins over the spatial assignment
 ```
 
 https://github.com/simzou/nielsen-dma/blob/master/nielsentopo.json
 
 https://raw.githubusercontent.com/simzou/nielsen-dma/master/tv.json
 
-___
+`dissolve:dma` gives each Census county the DMA its interior falls in, then applies `county-dma-overrides.csv`: a 5-digit county GEOID, or a 2-digit state FIPS for a whole-state default. It ships with Hawaii → Honolulu (744), Alaska → Anchorage (743), and the Fairbanks (745) and Juneau (747) borough lists. **Those Alaska borough lists are a best effort, so check them against Nielsen.** If you license Nielsen's county-to-DMA list, put all of it here and the shapes will match Nielsen exactly. `dist/temp/dma/county-dma.csv` lists every county's DMA and how it was assigned.
 
-City KML files:
-```
-src/citykml/*.kml
-```
-
-https://www2.census.gov/geo/tiger/GENZ2017/kml/
+`dmainfo.json` is only read. `features:dma` writes the enriched copy to `dist/temp/dma/dmainfo.json`.
 
 ___
 
-State Abbreviations
+### Ad-platform locations — `SRCGOOGLEGEO`, `SRCMSFTGEO`, `SRCMETAGEO`
 ```
-src/stateabbrev.json
+google-geotargets.csv            Google Ads geotargets (Criteria ID, Canonical Name, Target Type, Status)
+msft-geolocations.csv            Microsoft Advertising geographic locations (Location Id, Bing Display Name, AdWords Location Id)
+meta-geolocations.csv            Meta targeting keys for US regions (key, name, type, region, country_code)
+```
+
+- **Google** — `npm run fetch -- google` downloads the newest file from https://developers.google.com/google-ads/api/data/geotargets. Display & Video 360 uses the same IDs. The file has no DMA rows, but a DMA's ID is always `200000 + DMA code`.
+- **Microsoft** — `npm run fetch -- msft` with `MSADS_DEVELOPER_TOKEN` + `MSADS_ACCESS_TOKEN` (optional `MSADS_CUSTOMER_ID`, `MSADS_ACCOUNT_ID`) calls the Campaign Management API's `GetGeoLocationsFileUrl`. Or download it from Microsoft Advertising and save it here under this name. https://learn.microsoft.com/advertising/guides/geographical-location-codes
+- **Meta** — `npm run fetch -- meta` with `META_ACCESS_TOKEN` looks up each state's region key with the Marketing API targeting search. You don't need it for DMAs (`DMA:501`) or ZIPs (`US:43215`). https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search
+- **The Trade Desk** — no file. TTD targets US metros by Nielsen DMA code and postal codes as-is.
+
+___
+
+### State lookups — `SRCFIPS`, `SRCABBREV`
+```
+statefips.json      "39" -> "Ohio"        (census STATEFP field)
+stateabbrev.json    "OH" -> "Ohio"        (Zillow / Overture State field)
 ```
 
 https://gist.github.com/mshafrir/2646763
 
 ___
 
-Neighborhood Data - courtesy of zillow!
+### Legacy: Zillow neighborhoods — `SRCZILLOWFOLDER` (the `zillow` type)
 ```
-src/neighborhoodshp/*.*
+neighborhoodshp/ZillowNeighborhoods-<ST>.(shp|shx|dbf|prj)
 ```
 
-https://www.zillow.com/howto/api/neighborhood-boundaries.htm
-
-https://www.zillow.com/howto/api/neighborhood-boundaries.htm
+Zillow stopped publishing these, and they haven't been updated since around 2017. They're kept for reproducing old output: `npm run zillow`.

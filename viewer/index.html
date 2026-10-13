@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>kml-scraper · campaign geo map</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside id="panel">
+    <header>
+      <h1>Campaign geo map</h1>
+      <p class="muted">Drop location reports from Google Ads (any account — SEM, SEIM, DV360), Microsoft Advertising, Meta or The Trade Desk. Rows are matched to the shapes this repo generates by each platform's location ID, or by name.</p>
+    </header>
+
+    <section id="key-section" hidden>
+      <label for="api-key">Google Maps API key</label>
+      <div class="row">
+        <input id="api-key" type="password" placeholder="AIza…" autocomplete="off">
+        <button id="save-key" type="button">Load map</button>
+      </div>
+      <p class="muted small">Stored in this browser only. Or set <code>MAPS_API_KEY</code> before <code>npm run serve</code>.</p>
+    </section>
+
+    <section class="controls">
+      <label for="layer">Boundary layer</label>
+      <select id="layer"></select>
+
+      <label for="report" class="drop" id="drop">
+        <strong>Campaign reports</strong>
+        <span class="muted small">CSV / TSV, one or more — click or drop here</span>
+        <input id="report" type="file" accept=".csv,.tsv,.txt" multiple>
+      </label>
+      <ul id="reports" class="reports"></ul>
+
+      <label for="metric">Color by</label>
+      <select id="metric" disabled></select>
+    </section>
+
+    <section id="filters" hidden>
+      <label>Platforms &amp; accounts</label>
+      <ul id="filter-list" class="filters"></ul>
+    </section>
+
+    <section id="summary" class="muted small" aria-live="polite"></section>
+    <section id="legend" aria-label="Legend"></section>
+
+    <section>
+      <details id="table-wrap" open>
+        <summary>Matched places</summary>
+        <table id="table"><thead></thead><tbody></tbody></table>
+      </details>
+      <details id="unmatched-wrap">
+        <summary>Unmatched rows</summary>
+        <ul id="unmatched" class="small"></ul>
+      </details>
+    </section>
+  </aside>
+
+  <main id="map" aria-label="Map"><p class="placeholder muted">Map loads once an API key is available.</p></main>
+  <div id="tooltip" role="tooltip" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

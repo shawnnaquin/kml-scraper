@@ -34,12 +34,13 @@ npm run fetch -- all --force   # download again
 | `overture` | `overture-neighborhoods.gpkg` (via DuckDB) | — |
 | `geonames` | `geonames-US.zip`: a point and town per ZIP | — |
 | `zipcodes` | `zipcodes-us.json`: USPS ZIPs GeoNames lacks (PO box, unique), from the pinned `zipcodes` package | — |
+| `dma` | `dma-county-list.csv`: county → DMA, about 2021 ([BritCrit/dma_county_zip](https://github.com/BritCrit/dma_county_zip), pinned; no license, so never committed) | — |
 | `naturalearth` | `ne_50m_admin_0_countries.zip` | — |
 | `msft` | `msft-geolocations.csv` | `MSADS_DEVELOPER_TOKEN`, `MSADS_ACCESS_TOKEN` |
 | `meta` | `meta-geolocations.csv` (state keys) | `META_ACCESS_TOKEN` |
 | `ttd` | `ttd-geosegments.csv` (standard US segments + countries) | `TTD_TOKEN` |
 
-`src/meta-targeted.csv` (Meta city, county and neighborhood keys) comes from tfg's `geo:missing --meta-csv`; Meta only reveals those keys for places someone targets. A source that needs credentials skips without them. Downloads are git-ignored; [`src/README.md`](src/README.md) covers each one.
+`src/meta-targeted.csv` (Meta city, county and neighborhood keys) comes from tfg's `geo:missing --meta-csv`; Meta only reveals those keys for places someone targets. Without Microsoft tokens, tfg's `geo:msft-locations src/msft-geolocations.csv` writes the `msft` file. A source that needs credentials skips without them. Downloads are git-ignored; [`src/README.md`](src/README.md) covers each one.
 
 ## Types
 
@@ -63,7 +64,7 @@ One step at a time: `npm run <step>:<type>` (`npm run ids:city`). Each step rewr
 - `shp`: any GDAL source (zipped shapefile, GeoPackage, geoJSON) → KML in `dist/temp`
 - `process`: big KML → one lossless KML per place in `dist/complex` (streamed, one worker per core)
 - `simplify`: → geoJSON in `dist/simplified` (`PRECISION` tolerance)
-- `dissolve`: DMAs from counties (`src/county-dma-overrides.csv` wins; every assignment in `dist/temp/dma/county-dma.csv`); postal towns from ZCTAs
+- `dissolve`: DMAs from counties (the old polygons, then `src/dma-county-list.csv`, then `src/county-dma-overrides.csv`; every assignment in `dist/temp/dma/county-dma.csv`); postal towns from ZCTAs
 - `points`: one Point file per ZIP with no ZCTA
 - `ids`: platform IDs, see below
 
@@ -83,11 +84,11 @@ File names: `<state>_<place>` (`ohio_columbus`), `<place>` for `state`, `zip`, `
 - A type never takes an ID its parent holds: `zippoint` ← `zip`, `postaltown` ← `city`, `zillow` ← `neighborhood`.
 - Unmatched places: `dist/temp/<type>/unmatched-google.csv`.
 
-Match rates, Google: DMA 100%, ZIP 96%, county 97%, city 53% (Google targets ~21,600 US cities; 80% matched), postal towns 1,577. Trade Desk: ZIP 99.6%, DMA 97.6%, city 70.8%.
+Match rates, Google: DMA 100%, ZIP 96%, county 97%, city 53% (Google targets ~21,600 US cities; 80% matched), postal towns 1,577. Microsoft: DMA 100%, ZIP 99.5%, county 95.7%, city 58.5%, country 94.2%. Trade Desk: ZIP 99.6%, DMA 97.6%, city 70.8%.
 
 ## Output contract — `_index.json`
 
-`dist/simplified/<type>/_index.json` is what tfg's `geo:import` reads. Keep these stable, bump `schema` if they change: `schema`, `type`, and per place `file`, `name`, `label`, `ids.google`, `ids.meta`, `ids.ttd_segment`, `names.google`. A new type isn't a schema change. Place files are `Polygon`/`MultiPolygon` (`[lng, lat]`), a `zippoint` file one `Point`. How tfg uses it: [`TFG_CONSUMER.md`](TFG_CONSUMER.md).
+`dist/simplified/<type>/_index.json` is what tfg's `geo:import` reads. Keep these stable, bump `schema` if they change: `schema`, `type`, and per place `file`, `name`, `label`, `ids.google`, `ids.msft`, `ids.meta`, `ids.ttd_segment`, `names.google`. A new type isn't a schema change. Place files are `Polygon`/`MultiPolygon` (`[lng, lat]`), a `zippoint` file one `Point`. How tfg uses it: [`TFG_CONSUMER.md`](TFG_CONSUMER.md).
 
 ## Pack
 

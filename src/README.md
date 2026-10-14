@@ -36,14 +36,15 @@ ___
 ```
 nielsentopo.json                 old DMA polygons (topoJSON) — only used to assign counties to DMAs
 dmainfo.json                     DMA code -> name (dma1), rank, TV homes, …
-county-dma-overrides.csv         geoid,dma,note — wins over the spatial assignment
+county-dma-overrides.csv         geoid,dma,note — wins over the spatial assignment and the list
+dma-county-list.csv              geoid,dma — `fetch dma`, about 2021; wins over the spatial assignment
 ```
 
 https://github.com/simzou/nielsen-dma/blob/master/nielsentopo.json
 
 https://raw.githubusercontent.com/simzou/nielsen-dma/master/tv.json
 
-`dissolve:dma` gives each Census county the DMA its interior falls in, then applies `county-dma-overrides.csv`: a 5-digit county GEOID, or a 2-digit state FIPS for a whole-state default. It ships with Hawaii → Honolulu (744), Alaska → Anchorage (743), and the Fairbanks (745) and Juneau (747) borough lists. **Those Alaska borough lists are a best effort, so check them against Nielsen.** If you license Nielsen's county-to-DMA list, put all of it here and the shapes will match Nielsen exactly. `dist/temp/dma/county-dma.csv` lists every county's DMA and how it was assigned.
+`dissolve:dma` gives each Census county the DMA its interior falls in, then the DMA in `dma-county-list.csv` where that has the county (`npm run fetch -- dma`: [BritCrit/dma_county_zip](https://github.com/BritCrit/dma_county_zip) at a pinned commit, about 2021; it moves 81 of the old polygons' counties, e.g. Franklin PA to Harrisburg. No license is stated and Nielsen treats DMAs as proprietary, so it's downloaded, never committed; without it the build falls back to the polygons). Then it applies `county-dma-overrides.csv`: a 5-digit county GEOID, or a 2-digit state FIPS for a whole-state default. It ships with Hawaii → Honolulu (744), Alaska → Anchorage (743), and the Fairbanks (745) and Juneau (747) borough lists. **Those Alaska borough lists are a best effort, so check them against Nielsen.** If you license Nielsen's county-to-DMA list, put all of it here and the shapes will match Nielsen exactly. `dist/temp/dma/county-dma.csv` lists every county's DMA and how it was assigned.
 
 `dmainfo.json` is only read. `features:dma` writes the enriched copy to `dist/temp/dma/dmainfo.json`.
 
@@ -91,9 +92,9 @@ https://gist.github.com/mshafrir/2646763
 
 ___
 
-### Legacy: Zillow neighborhoods — `SRCZILLOWFOLDER` (the `zillow` type)
+### Zillow neighborhoods — `SRCZILLOWFOLDER` (the `zillow` type)
 ```
 neighborhoodshp/ZillowNeighborhoods-<ST>.(shp|shx|dbf|prj)
 ```
 
-Zillow stopped publishing these, and they haven't been updated since around 2017. They're kept for reproducing old output: `npm run zillow`.
+Zillow stopped publishing these around 2017, so they can't be refreshed. They're still the neighborhood fallback: Overture matches 557 Google neighborhoods, Zillow another 1,657. `npm run zillow` (not part of `all`).

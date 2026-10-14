@@ -15,5 +15,8 @@ src/meta-geolocations.csv
 src/meta-targeted.csv
 src/ttd-geosegments.csv
 src/zipcodes-us.json
+src/dma-county-list.csv
+src/*.download
+src/*.tar.gz
 src/*.whl
 src/*.bz2

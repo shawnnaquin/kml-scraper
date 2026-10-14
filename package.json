@@ -31,6 +31,7 @@
     "SRCDMA": "nielsentopo.json",
     "SRCDMAINFO": "dmainfo.json",
     "SRCCOUNTYDMA": "county-dma-overrides.csv",
+    "SRCDMALIST": "dma-county-list.csv",
     "SRCGOOGLEGEO": "google-geotargets.csv",
     "SRCMSFTGEO": "msft-geolocations.csv",
     "SRCMETAGEO": "meta-geolocations.csv",

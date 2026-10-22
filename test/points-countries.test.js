@@ -12,6 +12,7 @@ import { parseGeonamesPostal, parseZipcodes } from '../lib/geonames.js';
 import { runStep } from '../lib/pipeline.js';
 import { withFallback, zipPointsWithoutZcta } from '../lib/steps/points.js';
 import { postalTowns } from '../lib/steps/postaltown.js';
+import { linkTowns, townOf } from '../lib/steps/towns.js';
 import { matchKey } from '../lib/naming.js';
 import { geoIds } from '../lib/steps/ids.js';
 
@@ -150,6 +151,50 @@ test('zippoint: points + ids write a Point per non-ZCTA ZIP with Google / Meta /
   assert.equal(feature.features.length, 1);
   assert.deepEqual(feature.features[0].geometry, { type: 'Point', coordinates: [-92.0198, 30.2241] });
   assert.equal(feature.features[0].properties.meta_location_key, 'US:70502');
+});
+
+test('zippoint town: the Census place by name variants, else the postal town; none when two fit', () => {
+  const cities = new Map([
+    [matchKey('Carrollton', 'TX'), ['texas_carrollton.json']],
+    [matchKey('St. Martinville', 'LA'), ['louisiana_st_martinville.json']],
+    [matchKey('Spring Hill', 'FL'), ['florida_spring_hill.json', 'florida_springhill.json']],
+  ]);
+  const towns = new Map([[matchKey('Cypress', 'TX'), ['cypress_tx.json']]]);
+
+  assert.deepEqual(townOf({ PLACE: 'Carrollton', STUSPS: 'TX' }, cities, towns), { type: 'city', file: 'texas_carrollton.json' });
+  assert.deepEqual(townOf({ PLACE: 'Saint Martinville', STUSPS: 'LA' }, cities, towns), { type: 'city', file: 'louisiana_st_martinville.json' });
+  assert.deepEqual(townOf({ PLACE: 'Cypress', STUSPS: 'TX' }, cities, towns), { type: 'postaltown', file: 'cypress_tx.json' });
+  assert.equal(townOf({ PLACE: 'Spring Hill', STUSPS: 'FL' }, cities, towns), null, 'two places');
+  assert.equal(townOf({ PLACE: 'Carrollton', STUSPS: 'GA' }, cities, towns), null, 'another state');
+  assert.equal(townOf({ PLACE: 'APO AA' }, cities, towns), null, 'no state');
+});
+
+test('towns: links every zippoint in its _index.json, once city is built', async () => {
+  const config = sandbox();
+  const put = (type, attributes, places) => {
+    mkdirSync(config.paths.temp(type), { recursive: true });
+    mkdirSync(config.paths.simple(type), { recursive: true });
+    writeFileSync(path.join(config.paths.temp(type), 'attributes.json'), JSON.stringify(attributes));
+    writeFileSync(path.join(config.paths.simple(type), '_index.json'), JSON.stringify({ schema: 1, type, matched: { google: 1 }, places }));
+  };
+  put('zippoint', { 75011: { PLACE: 'Carrollton', STUSPS: 'TX' }, 77410: { PLACE: 'Cypress', STUSPS: 'TX' }, 99999: { PLACE: 'Nowhere', STUSPS: 'AK' } }, [
+    { file: '75011.json', name: '75011' },
+    { file: '77410.json', name: '77410' },
+    { file: '99999.json', name: '99999' },
+  ]);
+  assert.equal(await linkTowns(config), null, 'no city build yet');
+
+  put('city', { texas_carrollton: { NAME: 'Carrollton', STUSPS: 'TX' } }, [{ file: 'texas_carrollton.json', name: 'texas_carrollton' }]);
+  put('postaltown', { cypress_tx: { PLACE: 'Cypress', STUSPS: 'TX' } }, [{ file: 'cypress_tx.json', name: 'cypress_tx' }]);
+  assert.deepEqual(await linkTowns(config), { city: 1, postaltown: 1, none: 1 });
+
+  const index = JSON.parse(readFileSync(path.join(config.paths.simple('zippoint'), '_index.json'), 'utf8'));
+  assert.deepEqual(index.places.map((p) => p.town), [
+    { type: 'city', file: 'texas_carrollton.json' },
+    { type: 'postaltown', file: 'cypress_tx.json' },
+    null,
+  ]);
+  assert.deepEqual(index.matched, { google: 1, town: 2 });
 });
 
 test('country: Google ids by ISO code (Country Code), not name; top-level territories count; Meta key is the code', async () => {

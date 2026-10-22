@@ -88,7 +88,7 @@ Match rates, Google: DMA 100%, ZIP 96%, county 97%, city 53% (Google targets ~21
 
 ## Output contract — `_index.json`
 
-`dist/simplified/<type>/_index.json` is what tfg's `geo:import` reads. Keep these stable, bump `schema` if they change: `schema`, `type`, and per place `file`, `name`, `label`, `ids.google`, `ids.msft`, `ids.meta`, `ids.ttd_segment`, `names.google`. A new type isn't a schema change. Place files are `Polygon`/`MultiPolygon` (`[lng, lat]`), a `zippoint` file one `Point`. How tfg uses it: [`TFG_CONSUMER.md`](TFG_CONSUMER.md).
+`dist/simplified/<type>/_index.json` is what tfg's `geo:import` reads. Keep these stable, bump `schema` if they change: `schema`, `type`, and per place `file`, `name`, `label`, `ids.google`, `ids.msft`, `ids.meta`, `ids.ttd_segment`, `names.google`, and a `zippoint`'s `town` (`{type: city | postaltown, file}`, or `null`: the town tfg draws the PO box as, by its USPS town name + state; linked again by `ids` of `zippoint`, `city` or `postaltown`). A new type isn't a schema change. Place files are `Polygon`/`MultiPolygon` (`[lng, lat]`), a `zippoint` file one `Point`. How tfg uses it: [`TFG_CONSUMER.md`](TFG_CONSUMER.md).
 
 ## Pack
 
